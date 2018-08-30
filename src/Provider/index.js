@@ -4,10 +4,6 @@ import PropTypes from 'prop-types'
 import Context from '../Context'
 
 class Provider extends Component {
-    static propTypes = {
-        breakpoints: PropTypes.object.isRequired,
-    }
-
     matchMediaBreakpoints = {}
 
     constructor (props) {
@@ -55,6 +51,10 @@ class Provider extends Component {
             </Context.Provider>
         )
     }
+}
+
+Provider.propTypes = {
+    breakpoints: PropTypes.object.isRequired,
 }
 
 export default Provider
