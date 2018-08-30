@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 
 import Context from '../Context'
 
-class Provider extends Component {
-    matchMediaBreakpoints = {}
+export let matchMediaBreakpoints = {}
 
+class Provider extends Component {
+    state = {}
     constructor (props) {
         super(props)
 
-        this.matchMediaBreakpoints = props.breakpoints
+        matchMediaBreakpoints = props.breakpoints
 
         this.setInitialBreakpoints()
         this.addBreakpointsListeners()
@@ -17,16 +18,16 @@ class Provider extends Component {
 
     setInitialBreakpoints = () => {
         this.setState({
-            ...Object.keys(this.matchMediaBreakpoints).reduce((acc, breakpoint) => {
-                acc[breakpoint] = this.matchMediaBreakpoints[breakpoint].matches
+            ...Object.keys(matchMediaBreakpoints).reduce((acc, breakpoint) => {
+                acc[breakpoint] = matchMediaBreakpoints[breakpoint].matches
                 return acc
             }, {})
         })
     }
 
     addBreakpointsListeners = () => {
-        Object.keys(this.matchMediaBreakpoints).forEach(breakpoint => {
-            this.matchMediaBreakpoints[breakpoint].addListener(mq => {
+        Object.keys(matchMediaBreakpoints).forEach(breakpoint => {
+            matchMediaBreakpoints[breakpoint].addListener(mq => {
                 mq.matches ? this.setActiveBreakpoint(breakpoint) : this.unsetActiveBreakpoint(breakpoint)
             })
         })

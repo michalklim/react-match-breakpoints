@@ -8,7 +8,7 @@ const withBreakpoints = ChildComponent => {
             return (
                 <Context.Consumer>
                     {breakpoints => (
-                        <ChildComponent { ...this.props } { breakpoints } />
+                        <ChildComponent { ...this.props } breakpoints={breakpoints} />
                     )}
                 </Context.Consumer>
             )

@@ -2654,6 +2654,65 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./src/Breakpoints/index.js":
+/*!**********************************!*\
+  !*** ./src/Breakpoints/index.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _withBreakpoints = __webpack_require__(/*! ../withBreakpoints */ "./src/withBreakpoints/index.js");
+
+var _withBreakpoints2 = _interopRequireDefault(_withBreakpoints);
+
+var _Provider = __webpack_require__(/*! ../Provider */ "./src/Provider/index.js");
+
+var _utils = __webpack_require__(/*! ../utils */ "./src/utils/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Breakpoints = Object.keys(_Provider.matchMediaBreakpoints).reduce(function (parentComponent, breakpoint) {
+    var componentName = (0, _utils.capitalizeFirstLetter)(breakpoint);
+    parentComponent[componentName] = (0, _withBreakpoints2.default)(function (props) {
+        return props.breakpoints[breakpoint] && props.children;
+    });
+    parentComponent[componentName].displayName = componentName;
+    return parentComponent;
+}, {});
+
+var breakpointsPropTypes = _extends({
+    children: _propTypes2.default.node
+}, Object.keys(_Provider.matchMediaBreakpoints).reduce(function (acc, val) {
+    acc[val] = _propTypes2.default.bool;
+    return acc;
+}, {}));
+
+Object.keys(Breakpoints).forEach(function (item) {
+    Breakpoints[item].propTypes = breakpointsPropTypes;
+});
+
+exports.default = Breakpoints;
+module.exports = exports['default'];
+
+/***/ }),
+
 /***/ "./src/Context/index.js":
 /*!******************************!*\
   !*** ./src/Context/index.js ***!
@@ -2690,6 +2749,7 @@ module.exports = exports['default'];
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.matchMediaBreakpoints = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -2717,6 +2777,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var matchMediaBreakpoints = exports.matchMediaBreakpoints = {};
+
 var Provider = function (_Component) {
     _inherits(Provider, _Component);
 
@@ -2725,18 +2787,18 @@ var Provider = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Provider.__proto__ || Object.getPrototypeOf(Provider)).call(this, props));
 
-        _this.matchMediaBreakpoints = {};
+        _this.state = {};
 
         _this.setInitialBreakpoints = function () {
-            _this.setState(_extends({}, Object.keys(_this.matchMediaBreakpoints).reduce(function (acc, breakpoint) {
-                acc[breakpoint] = _this.matchMediaBreakpoints[breakpoint].matches;
+            _this.setState(_extends({}, Object.keys(matchMediaBreakpoints).reduce(function (acc, breakpoint) {
+                acc[breakpoint] = matchMediaBreakpoints[breakpoint].matches;
                 return acc;
             }, {})));
         };
 
         _this.addBreakpointsListeners = function () {
-            Object.keys(_this.matchMediaBreakpoints).forEach(function (breakpoint) {
-                _this.matchMediaBreakpoints[breakpoint].addListener(function (mq) {
+            Object.keys(matchMediaBreakpoints).forEach(function (breakpoint) {
+                matchMediaBreakpoints[breakpoint].addListener(function (mq) {
                     mq.matches ? _this.setActiveBreakpoint(breakpoint) : _this.unsetActiveBreakpoint(breakpoint);
                 });
             });
@@ -2750,7 +2812,7 @@ var Provider = function (_Component) {
             _this.setState(_defineProperty({}, breakpoint, false));
         };
 
-        _this.matchMediaBreakpoints = props.breakpoints;
+        exports.matchMediaBreakpoints = matchMediaBreakpoints = props.breakpoints;
 
         _this.setInitialBreakpoints();
         _this.addBreakpointsListeners();
@@ -2776,7 +2838,6 @@ Provider.propTypes = {
 };
 
 exports.default = Provider;
-module.exports = exports['default'];
 
 /***/ }),
 
@@ -2803,16 +2864,150 @@ Object.defineProperty(exports, 'Provider', {
   }
 });
 
-var _Context = __webpack_require__(/*! ./Context */ "./src/Context/index.js");
+var _withBreakpoints = __webpack_require__(/*! ./withBreakpoints */ "./src/withBreakpoints/index.js");
 
-Object.defineProperty(exports, 'Context', {
+Object.defineProperty(exports, 'withBreakpoints', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_Context).default;
+    return _interopRequireDefault(_withBreakpoints).default;
+  }
+});
+
+var _Breakpoints = __webpack_require__(/*! ./Breakpoints */ "./src/Breakpoints/index.js");
+
+Object.defineProperty(exports, 'Breakpoints', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_Breakpoints).default;
   }
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
+/***/ "./src/utils/capitalizeFirstLetter/index.js":
+/*!**************************************************!*\
+  !*** ./src/utils/capitalizeFirstLetter/index.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var capitalizeFirstLetter = function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+exports.default = capitalizeFirstLetter;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/utils/index.js":
+/*!****************************!*\
+  !*** ./src/utils/index.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _capitalizeFirstLetter = __webpack_require__(/*! ./capitalizeFirstLetter */ "./src/utils/capitalizeFirstLetter/index.js");
+
+Object.defineProperty(exports, 'capitalizeFirstLetter', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_capitalizeFirstLetter).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
+/***/ "./src/withBreakpoints/index.js":
+/*!**************************************!*\
+  !*** ./src/withBreakpoints/index.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Context = __webpack_require__(/*! ../Context */ "./src/Context/index.js");
+
+var _Context2 = _interopRequireDefault(_Context);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var withBreakpoints = function withBreakpoints(ChildComponent) {
+    var WithBreakpoints = function (_Component) {
+        _inherits(WithBreakpoints, _Component);
+
+        function WithBreakpoints() {
+            _classCallCheck(this, WithBreakpoints);
+
+            return _possibleConstructorReturn(this, (WithBreakpoints.__proto__ || Object.getPrototypeOf(WithBreakpoints)).apply(this, arguments));
+        }
+
+        _createClass(WithBreakpoints, [{
+            key: 'render',
+            value: function render() {
+                var _this2 = this;
+
+                return _react2.default.createElement(
+                    _Context2.default.Consumer,
+                    null,
+                    function (breakpoints) {
+                        return _react2.default.createElement(ChildComponent, _extends({}, _this2.props, { breakpoints: breakpoints }));
+                    }
+                );
+            }
+        }]);
+
+        return WithBreakpoints;
+    }(_react.Component);
+
+    var getDisplayName = function getDisplayName(WrappedComponent) {
+        return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+    };
+
+    WithBreakpoints.displayName = 'withBreakpoints(' + getDisplayName(WithBreakpoints) + ')';
+
+    return WithBreakpoints;
+};
+
+exports.default = withBreakpoints;
+module.exports = exports['default'];
 
 /***/ })
 
