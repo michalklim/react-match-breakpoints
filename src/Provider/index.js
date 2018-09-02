@@ -6,23 +6,26 @@ import Context from '../Context'
 export let matchMediaBreakpoints = {}
 
 class Provider extends Component {
-    state = {}
+    state = {
+        breakpoints: {},
+        componentRenameFn: undefined
+    }
     constructor (props) {
         super(props)
+        const { breakpoints, componentRenameFn } = props
 
-        matchMediaBreakpoints = props.breakpoints
+        matchMediaBreakpoints = this.buildMatchMediaBreakpoints(breakpoints, componentRenameFn)
 
-        this.setInitialBreakpoints()
-        this.addBreakpointsListeners()
-    }
-
-    setInitialBreakpoints = () => {
-        this.setState({
+        this.state = {
             ...Object.keys(matchMediaBreakpoints).reduce((acc, breakpoint) => {
                 acc[breakpoint] = matchMediaBreakpoints[breakpoint].matches
                 return acc
-            }, {})
-        })
+            }, {}),
+        }
+    }ś
+
+    buildMatchMediaBreakpoints = () => {
+
     }
 
     addBreakpointsListeners = () => {

@@ -1,28 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import withBreakpoints from '../withBreakpoints'
-import { matchMediaBreakpoints } from '../Provider'
+import Context from '../Context'
 import { capitalizeFirstLetter } from '../utils'
 
-const Breakpoints = Object.keys(matchMediaBreakpoints).reduce(
-    (parentComponent, breakpoint) => {
-        const componentName = capitalizeFirstLetter(breakpoint)
-        parentComponent[componentName] = withBreakpoints(
-            props => props.breakpoints[breakpoint] && props.children
-        )
-        parentComponent[componentName].displayName = componentName
-        return parentComponent
-    },
-    {}
-)
+const Breakpoints = () => {
+    return (
+        <Context.Consumer>
+            {
+                (breakpoints, componentRenameFn) => ({
+                    ...Object.keys(breakpoints).reduce(
+                        (parentComponent, breakpoint) => {
+                            const componentName = componentRenameFn
+                                ? componentRenameFn(breakpoint)
+                                : capitalizeFirstLetter(breakpoint)
+                            parentComponent[componentName] = ({children}) => breakpoints[breakpoint] && children
+                            parentComponent[componentName].displayName = `Breakpoints.${componentName}`
+                            return parentComponent
+                        },
+                        {}
+                    )
+                })
+            }
+        </Context.Consumer>
+    )
+}
 
 const breakpointsPropTypes = {
     children: PropTypes.node,
-    ...Object.keys(matchMediaBreakpoints).reduce((acc, val) => {
-        acc[val] = PropTypes.bool
-        return acc
-    }, {})
 }
 
 Object.keys(Breakpoints).forEach(item => {

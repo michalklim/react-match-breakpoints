@@ -1,3 +1,5 @@
-export { default as Provider } from './Provider'
-export { default as withBreakpoints } from './withBreakpoints'
-export { default as Breakpoints } from './Breakpoints'
+import Provider from './Provider'
+import withBreakpoints from './withBreakpoints'
+import Breakpoints from './Breakpoints'
+
+export {Provider, withBreakpoints, Breakpoints}

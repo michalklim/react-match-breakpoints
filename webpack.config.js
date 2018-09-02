@@ -9,6 +9,13 @@ let libraryName = pkg.name;
 
 let outputFile, mode;
 
+const reactExternal = {
+    root: 'React',
+    commonjs2: 'react',
+    commonjs: 'react',
+    amd: 'react'
+};
+
 if (env === 'build') {
   mode = 'production';
   outputFile = libraryName + '.min.js';
@@ -20,6 +27,9 @@ if (env === 'build') {
 const config = {
   mode: mode,
   entry: __dirname + '/src/index.js',
+  externals: {
+      'react': reactExternal,
+  },
   devtool: 'source-map',
   output: {
     path: __dirname + '/dist',

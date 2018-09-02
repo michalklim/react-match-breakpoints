@@ -5,9 +5,9 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build && npm run test",
-    "dev": "webpack --progress --colors --watch --env dev",
     "test": "jest",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "start:dev": "webpack --progress --colors --watch --env dev"
   },
   "author": "Michal Klim",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "watch": "^1.0.2",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.6"
+    "webpack-dev-server": "^3.1.7"
   },
   "dependencies": {
     "prop-types": "^15.6.2"
