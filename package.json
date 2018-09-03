@@ -33,6 +33,7 @@
     "webpack-dev-server": "^3.1.7"
   },
   "dependencies": {
-    "prop-types": "^15.6.2"
+    "prop-types": "^15.6.2",
+    "warning": "^4.0.2"
   }
 }

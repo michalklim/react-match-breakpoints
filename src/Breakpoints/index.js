@@ -1,4 +1,5 @@
 import React from 'react'
+import warning from 'warning'
 
 import { capitalizeFirstLetter } from '../utils'
 import withBreakpoints from '../withBreakpoints'
@@ -13,6 +14,15 @@ class BreakpointsStore {
     }
 }
 
-const breakpointsStoreInstance = new BreakpointsStore()
+const breakpointsStoreInstance = new Proxy(new BreakpointsStore(), {
+    get: function(target, name) {
+        if (!(name in target) && name !== '__esModule') {
+            warning(false, `[React Match Breakpoints] You are trying to use component (${name}) that name doesn\'t match any breakpoint you have provided. Current breakpoints components names: ${Object.keys(target).join(', ')}`)
+            return () => null;
+        }
+        return target[name];
+    }
+});
+
 
 export default breakpointsStoreInstance

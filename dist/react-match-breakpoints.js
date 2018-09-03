@@ -927,6 +927,80 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
+/***/ "./node_modules/warning/warning.js":
+/*!*****************************************!*\
+  !*** ./node_modules/warning/warning.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var __DEV__ = "development" !== 'production';
+
+var warning = function() {};
+
+if (__DEV__) {
+  var printWarning = function printWarning(format, args) {
+    var len = arguments.length;
+    args = new Array(len > 2 ? len - 2 : 0);
+    for (var key = 2; key < len; key++) {
+      args[key - 2] = arguments[key];
+    }
+    var argIndex = 0;
+    var message = 'Warning: ' +
+      format.replace(/%s/g, function() {
+        return args[argIndex++];
+      });
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  }
+
+  warning = function(condition, format, args) {
+    var len = arguments.length;
+    args = new Array(len > 2 ? len - 2 : 0);
+    for (var key = 2; key < len; key++) {
+      args[key - 2] = arguments[key];
+    }
+    if (format === undefined) {
+      throw new Error(
+          '`warning(condition, format, ...args)` requires a warning ' +
+          'message argument'
+      );
+    }
+    if (!condition) {
+      printWarning.apply(null, [format].concat(args));
+    }
+  };
+}
+
+module.exports = warning;
+
+
+/***/ }),
+
 /***/ "./src/Breakpoints/index.js":
 /*!**********************************!*\
   !*** ./src/Breakpoints/index.js ***!
@@ -946,6 +1020,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(/*! react */ "react");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _warning = __webpack_require__(/*! warning */ "./node_modules/warning/warning.js");
+
+var _warning2 = _interopRequireDefault(_warning);
 
 var _utils = __webpack_require__(/*! ../utils */ "./src/utils/index.js");
 
@@ -982,7 +1060,17 @@ var BreakpointsStore = function () {
     return BreakpointsStore;
 }();
 
-var breakpointsStoreInstance = new BreakpointsStore();
+var breakpointsStoreInstance = new Proxy(new BreakpointsStore(), {
+    get: function get(target, name) {
+        if (!(name in target) && name !== '__esModule') {
+            (0, _warning2.default)(false, '[React Match Breakpoints] You are trying to use component (' + name + ') that name doesn\'t match any breakpoint you have provided. Current breakpoints components names: ' + Object.keys(target).join(', '));
+            return function () {
+                return null;
+            };
+        }
+        return target[name];
+    }
+});
 
 exports.default = breakpointsStoreInstance;
 module.exports = exports['default'];
@@ -1036,6 +1124,10 @@ var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-type
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _warning = __webpack_require__(/*! warning */ "./node_modules/warning/warning.js");
+
+var _warning2 = _interopRequireDefault(_warning);
+
 var _Context = __webpack_require__(/*! ../Context */ "./src/Context/index.js");
 
 var _Context2 = _interopRequireDefault(_Context);
@@ -1068,12 +1160,16 @@ var Provider = function (_Component) {
             componentRenameFn = props.componentRenameFn;
 
 
-        var matchMediaBreakpoints = _this.buildMatchMediaBreakpoints(breakpoints);
-        var stateBreakpoints = _this.buildBooleanBreakpointsState(matchMediaBreakpoints);
+        (0, _warning2.default)(!!breakpoints, '[React Match Breakpoints] It seems that you didn\'t provide valid breakpoints object to the provider');
 
-        _Breakpoints2.default.buildBreakpointsComponents(stateBreakpoints, componentRenameFn);
+        if (!!breakpoints) {
+            var matchMediaBreakpoints = _this.buildMatchMediaBreakpoints(breakpoints);
+            var stateBreakpoints = _this.buildBooleanBreakpointsState(matchMediaBreakpoints);
 
-        _this.state = stateBreakpoints;
+            _Breakpoints2.default.buildBreakpointsComponents(stateBreakpoints, componentRenameFn);
+
+            _this.state = stateBreakpoints;
+        }
         return _this;
     }
 

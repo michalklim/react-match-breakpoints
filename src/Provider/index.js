@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import warning from 'warning'
 
 import Context from '../Context'
 import breakpointsStoreInstance from '../Breakpoints'
@@ -12,12 +13,16 @@ class Provider extends Component {
         super(props)
         const { breakpoints, componentRenameFn } = props
 
-        const matchMediaBreakpoints = this.buildMatchMediaBreakpoints(breakpoints)
-        const stateBreakpoints = this.buildBooleanBreakpointsState(matchMediaBreakpoints)
+        warning(!!(breakpoints), '[React Match Breakpoints] It seems that you didn\'t provide valid breakpoints object to the provider')
 
-        breakpointsStoreInstance.buildBreakpointsComponents(stateBreakpoints, componentRenameFn)
+        if(!!breakpoints) {
+            const matchMediaBreakpoints = this.buildMatchMediaBreakpoints(breakpoints)
+            const stateBreakpoints = this.buildBooleanBreakpointsState(matchMediaBreakpoints)
 
-        this.state = stateBreakpoints
+            breakpointsStoreInstance.buildBreakpointsComponents(stateBreakpoints, componentRenameFn)
+
+            this.state = stateBreakpoints
+        }
     }
 
     buildBooleanBreakpointsState = matchMediaBreakpoints => {

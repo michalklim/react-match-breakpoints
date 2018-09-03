@@ -15,7 +15,7 @@ class App extends Component {
         isDesktop: `screen and (min-width: 1281px) and (max-width: 1920px)`
     }
     return (
-        <MatchBreakpointsProvider breakpoints={breakpoints}>
+        <MatchBreakpointsProvider breakpoints={breakpoints} componentRenameFn={this.renameBreakpointsComponent}>
             <Page />
             <div className="App">
                 <header className="App-header">
