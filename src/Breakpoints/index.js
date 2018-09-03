@@ -1,37 +1,18 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import Context from '../Context'
 import { capitalizeFirstLetter } from '../utils'
+import withBreakpoints from '../withBreakpoints'
 
-const Breakpoints = () => {
-    return (
-        <Context.Consumer>
-            {
-                (breakpoints, componentRenameFn) => ({
-                    ...Object.keys(breakpoints).reduce(
-                        (parentComponent, breakpoint) => {
-                            const componentName = componentRenameFn
-                                ? componentRenameFn(breakpoint)
-                                : capitalizeFirstLetter(breakpoint)
-                            parentComponent[componentName] = ({children}) => breakpoints[breakpoint] && children
-                            parentComponent[componentName].displayName = `Breakpoints.${componentName}`
-                            return parentComponent
-                        },
-                        {}
-                    )
-                })
-            }
-        </Context.Consumer>
-    )
+class BreakpointsStore {
+    buildBreakpointsComponents(breakpoints, componentRenameFn) {
+        Object.keys(breakpoints).forEach(breakpoint => {
+            const componentName = componentRenameFn ? componentRenameFn(breakpoint) : capitalizeFirstLetter(breakpoint)
+            this[componentName] = withBreakpoints(({children, breakpoints}) => breakpoints[breakpoint] && children)
+            this[componentName].displayName = `Breakpoints.Components${componentName}`
+        })
+    }
 }
 
-const breakpointsPropTypes = {
-    children: PropTypes.node,
-}
+const breakpointsStoreInstance = new BreakpointsStore()
 
-Object.keys(Breakpoints).forEach(item => {
-    Breakpoints[item].propTypes = breakpointsPropTypes
-})
-
-export default Breakpoints
+export default breakpointsStoreInstance

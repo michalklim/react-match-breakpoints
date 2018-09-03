@@ -2,38 +2,39 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Context from '../Context'
-
-export let matchMediaBreakpoints = {}
+import breakpointsStoreInstance from '../Breakpoints'
 
 class Provider extends Component {
     state = {
         breakpoints: {},
-        componentRenameFn: undefined
     }
     constructor (props) {
         super(props)
         const { breakpoints, componentRenameFn } = props
 
-        matchMediaBreakpoints = this.buildMatchMediaBreakpoints(breakpoints, componentRenameFn)
+        const matchMediaBreakpoints = this.buildMatchMediaBreakpoints(breakpoints)
+        const stateBreakpoints = this.buildBooleanBreakpointsState(matchMediaBreakpoints)
 
-        this.state = {
-            ...Object.keys(matchMediaBreakpoints).reduce((acc, breakpoint) => {
-                acc[breakpoint] = matchMediaBreakpoints[breakpoint].matches
-                return acc
-            }, {}),
-        }
-    }ś
+        breakpointsStoreInstance.buildBreakpointsComponents(stateBreakpoints, componentRenameFn)
 
-    buildMatchMediaBreakpoints = () => {
-
+        this.state = stateBreakpoints
     }
 
-    addBreakpointsListeners = () => {
-        Object.keys(matchMediaBreakpoints).forEach(breakpoint => {
-            matchMediaBreakpoints[breakpoint].addListener(mq => {
+    buildBooleanBreakpointsState = matchMediaBreakpoints => {
+        return Object.keys(matchMediaBreakpoints).reduce((acc, breakpoint) => {
+            acc[breakpoint] = matchMediaBreakpoints[breakpoint].matches
+            return acc
+        }, {})
+    }
+
+    buildMatchMediaBreakpoints = breakpoints => {
+        return Object.keys(breakpoints).reduce((acc, breakpoint) => {
+            acc[breakpoint] = window.matchMedia(breakpoints[breakpoint])
+            acc[breakpoint].addListener(mq => {
                 mq.matches ? this.setActiveBreakpoint(breakpoint) : this.unsetActiveBreakpoint(breakpoint)
             })
-        })
+            return acc
+        }, {})
     }
 
     setActiveBreakpoint = breakpoint => {

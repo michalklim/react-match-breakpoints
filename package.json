@@ -7,7 +7,9 @@
     "build": "webpack --env dev && webpack --env build && npm run test",
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "start:dev": "webpack --progress --colors --watch --env dev"
+    "start": "npm run start:dev && npm run start:docs",
+    "start:dev": "webpack --progress --colors --watch --env dev",
+    "start:docs": "npm --prefix ./docs install && npm --prefix ./docs start"
   },
   "author": "Michal Klim",
   "license": "MIT",

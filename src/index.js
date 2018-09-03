@@ -1,5 +1,5 @@
 import Provider from './Provider'
 import withBreakpoints from './withBreakpoints'
-import Breakpoints from './Breakpoints'
+import breakpointsStoreInstance from './Breakpoints'
 
-export {Provider, withBreakpoints, Breakpoints}
+export {Provider, withBreakpoints, breakpointsStoreInstance as Breakpoints}
