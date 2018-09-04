@@ -9,7 +9,13 @@
     "test:watch": "npm test -- --watch",
     "start": "npm run start:dev && npm run start:docs",
     "start:dev": "webpack --progress --colors --watch --env dev",
-    "start:docs": "npm --prefix ./docs install && npm --prefix ./docs start"
+    "start:docs": "npm --prefix ./docs install && npm --prefix ./docs start",
+    "prettier": "prettier --single-quote --print-width=120 --trailing-comma es5 --no-semi",
+    "format": "npm run prettier -- --write '{,!(dist|docs)/**/}*.js'",
+    "precommit": "lint-staged",
+    "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+    "lint": "eslint **/*.js --quiet",
+    "lint-fix": "eslint --fix"
   },
   "author": "Michal Klim",
   "license": "MIT",
@@ -18,6 +24,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-eslint": "8.0.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
@@ -30,10 +37,29 @@
     "watch": "^1.0.2",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.7"
+    "webpack-dev-server": "^3.1.7",
+    "eslint": "4.10.0",
+    "eslint-config-airbnb": "15.1.0",
+    "eslint-config-prettier": "2.7.0",
+    "eslint-config-react-app": "2.0.1",
+    "eslint-loader": "1.9.0",
+    "eslint-plugin-flowtype": "2.39.1",
+    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-jsx-a11y": "5.1.1",
+    "eslint-plugin-prettier": "2.3.1",
+    "eslint-plugin-react": "7.4.0",
+    "husky": "0.14.3",
+    "prettier": "1.8.0",
+    "lint-staged": "4.3.0"
   },
   "dependencies": {
     "prop-types": "^15.6.2",
     "warning": "^4.0.2"
+  },
+  "lint-staged": {
+    "{,!(dist|docs)/**/}*.js": [
+      "npm run prettier -- --write",
+      "git add"
+    ]
   }
 }

@@ -1,34 +1,34 @@
 /* global __dirname, require, module*/
 
-const webpack = require('webpack');
-const path = require('path');
-const env = require('yargs').argv.env; // use --env with webpack 2
-const pkg = require('./package.json');
+const webpack = require('webpack')
+const path = require('path')
+const env = require('yargs').argv.env // use --env with webpack 2
+const pkg = require('./package.json')
 
-let libraryName = pkg.name;
+let libraryName = pkg.name
 
-let outputFile, mode;
+let outputFile, mode
 
 const reactExternal = {
-    root: 'React',
-    commonjs2: 'react',
-    commonjs: 'react',
-    amd: 'react'
-};
+  root: 'React',
+  commonjs2: 'react',
+  commonjs: 'react',
+  amd: 'react',
+}
 
 if (env === 'build') {
-  mode = 'production';
-  outputFile = libraryName + '.min.js';
+  mode = 'production'
+  outputFile = libraryName + '.min.js'
 } else {
-  mode = 'development';
-  outputFile = libraryName + '.js';
+  mode = 'development'
+  outputFile = libraryName + '.js'
 }
 
 const config = {
   mode: mode,
   entry: __dirname + '/src/index.js',
   externals: {
-      'react': reactExternal,
+    react: reactExternal,
   },
   devtool: 'source-map',
   output: {
@@ -36,21 +36,21 @@ const config = {
     filename: outputFile,
     library: libraryName,
     libraryTarget: 'umd',
-    umdNamedDefine: true
+    umdNamedDefine: true,
   },
   module: {
     rules: [
       {
         test: /(\.jsx|\.js)$/,
         loader: 'babel-loader',
-        exclude: /(node_modules|bower_components)/
+        exclude: /(node_modules|bower_components)/,
       },
-    ]
+    ],
   },
   resolve: {
     modules: [path.resolve('./node_modules'), path.resolve('./src')],
-    extensions: ['.json', '.js']
-  }
-};
+    extensions: ['.json', '.js'],
+  },
+}
 
-module.exports = config;
+module.exports = config
