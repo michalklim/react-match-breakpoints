@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {Provider as MatchBreakpointsProvider} from 'react-match-breakpoints'
 
 import logo from './logo.svg';
@@ -15,17 +15,19 @@ class App extends Component {
         isDesktop: `screen and (min-width: 1281px) and (max-width: 1920px)`
     }
     return (
-        <MatchBreakpointsProvider breakpoints={breakpoints} componentRenameFn={this.renameBreakpointsComponent}>
-            <Page />
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h1 className="App-title">Welcome to React</h1>
-                </header>
-                <p className="App-intro">
-                    To get started, edit <code>src/App.js</code> and save to reload.
-                </p>
-            </div>
+        <MatchBreakpointsProvider breakpoints={breakpoints}>
+            <Fragment>
+                <Page />
+                <div className="App">
+                    <header className="App-header">
+                        <img src={logo} className="App-logo" alt="logo" />
+                        <h1 className="App-title">Welcome to React</h1>
+                    </header>
+                    <p className="App-intro">
+                        To get started, edit <code>src/App.js</code> and save to reload.
+                    </p>
+                </div>
+            </Fragment>
         </MatchBreakpointsProvider>
     );
   }
