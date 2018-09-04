@@ -1052,7 +1052,7 @@ var BreakpointsStore = function () {
                         breakpoints = _ref.breakpoints;
                     return breakpoints[breakpoint] && children;
                 });
-                _this[componentName].displayName = 'Breakpoints.Components' + componentName;
+                _this[componentName].displayName = 'Breakpoints.' + componentName;
             });
         }
     }]);
@@ -1063,7 +1063,9 @@ var BreakpointsStore = function () {
 var breakpointsStoreInstance = new Proxy(new BreakpointsStore(), {
     get: function get(target, name) {
         if (!(name in target) && name !== '__esModule') {
-            (0, _warning2.default)(false, '[React Match Breakpoints] You are trying to use component (' + name + ') that name doesn\'t match any breakpoint you have provided. Current breakpoints components names: ' + Object.keys(target).join(', '));
+            if (true) {
+                (0, _warning2.default)(false, '[React Match Breakpoints] You are trying to use component (' + name + ') that name doesn\'t match any breakpoint you have provided. Current breakpoints components names: ' + Object.keys(target).join(', '));
+            }
             return function () {
                 return null;
             };
@@ -1160,8 +1162,6 @@ var Provider = function (_Component) {
             componentRenameFn = props.componentRenameFn;
 
 
-        (0, _warning2.default)(!!breakpoints, '[React Match Breakpoints] It seems that you didn\'t provide valid breakpoints object to the provider');
-
         if (!!breakpoints) {
             var matchMediaBreakpoints = _this.buildMatchMediaBreakpoints(breakpoints);
             var stateBreakpoints = _this.buildBooleanBreakpointsState(matchMediaBreakpoints);
@@ -1169,6 +1169,8 @@ var Provider = function (_Component) {
             _Breakpoints2.default.buildBreakpointsComponents(stateBreakpoints, componentRenameFn);
 
             _this.state = stateBreakpoints;
+        } else if (true) {
+            (0, _warning2.default)(!!breakpoints, '[React Match Breakpoints] It seems that you didn\'t provide valid breakpoints object to the provider');
         }
         return _this;
     }
@@ -1179,7 +1181,7 @@ var Provider = function (_Component) {
             return _react2.default.createElement(
                 _Context2.default.Provider,
                 { value: this.state },
-                this.props.children
+                _react.Children.only(this.props.children)
             );
         }
     }]);
