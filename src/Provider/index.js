@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Children } from 'react'
 import PropTypes from 'prop-types'
 import warning from 'warning'
 
@@ -13,8 +13,6 @@ class Provider extends Component {
         super(props)
         const { breakpoints, componentRenameFn } = props
 
-        warning(!!(breakpoints), '[React Match Breakpoints] It seems that you didn\'t provide valid breakpoints object to the provider')
-
         if(!!breakpoints) {
             const matchMediaBreakpoints = this.buildMatchMediaBreakpoints(breakpoints)
             const stateBreakpoints = this.buildBooleanBreakpointsState(matchMediaBreakpoints)
@@ -22,6 +20,8 @@ class Provider extends Component {
             breakpointsStoreInstance.buildBreakpointsComponents(stateBreakpoints, componentRenameFn)
 
             this.state = stateBreakpoints
+        } else if (process.env.NODE_ENV !== 'production') {
+            warning(!!(breakpoints), '[React Match Breakpoints] It seems that you didn\'t provide valid breakpoints object to the provider')
         }
     }
 
@@ -57,7 +57,7 @@ class Provider extends Component {
     render() {
         return (
             <Context.Provider value={this.state}>
-                {this.props.children}
+                {Children.only(this.props.children)}
             </Context.Provider>
         )
     }
