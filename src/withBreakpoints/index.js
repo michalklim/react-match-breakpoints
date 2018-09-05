@@ -15,7 +15,7 @@ const withBreakpoints = ChildComponent => {
 
   const getDisplayName = WrappedComponent => WrappedComponent.displayName || WrappedComponent.name || 'Component'
 
-  WithBreakpoints.displayName = `withBreakpoints(${getDisplayName(WithBreakpoints)})`
+  WithBreakpoints.displayName = `withBreakpoints(${getDisplayName(ChildComponent)})`
 
   return WithBreakpoints
 }
