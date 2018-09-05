@@ -15,7 +15,7 @@ class Provider extends Component {
 
     if (!!breakpoints) {
       const matchMediaBreakpoints = this.buildMatchMediaBreakpoints(breakpoints)
-      const stateBreakpoints = this.buildBooleanBreakpointsState(matchMediaBreakpoints)
+      const stateBreakpoints = this.buildBooleanBreakpoints(matchMediaBreakpoints)
 
       breakpointsStoreInstance.buildBreakpointsComponents(stateBreakpoints, componentRenameFn)
 
@@ -28,7 +28,7 @@ class Provider extends Component {
     }
   }
 
-  buildBooleanBreakpointsState = matchMediaBreakpoints => {
+  buildBooleanBreakpoints = matchMediaBreakpoints => {
     return Object.keys(matchMediaBreakpoints).reduce((acc, breakpoint) => {
       acc[breakpoint] = matchMediaBreakpoints[breakpoint].matches
       return acc

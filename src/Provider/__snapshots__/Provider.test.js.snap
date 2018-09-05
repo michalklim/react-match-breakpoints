@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Provider /> matches the snapshot 1`] = `
+<ContextProvider
+  value={
+    Object {
+      "isDesktop": false,
+      "isMobile": false,
+      "isTablet": false,
+    }
+  }
+>
+  <div>
+    test
+  </div>
+</ContextProvider>
+`;
