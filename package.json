@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build && npm run test",
-    "test": "jest",
+    "test": "jest --coverage",
     "test:watch": "npm test -- --watch",
     "start": "npm run start:dev && npm run start:docs",
     "start:dev": "webpack --progress --colors --watch --env dev",
@@ -70,6 +70,14 @@
     ]
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>src/setupTests.js"
+    "setupTestFrameworkScriptFile": "<rootDir>src/setupTests.js",
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{js,jsx,mjs}"
+    ],
+    "coveragePathIgnorePatterns": ["<rootDir>/src/index.js", "<rootDir>/src/setupTests.js"],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
+      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
+    ]
   }
 }
