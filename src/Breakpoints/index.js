@@ -6,31 +6,34 @@ import withBreakpoints from '../withBreakpoints'
 
 class BreakpointsStore {
   buildBreakpointsComponents(breakpoints, componentRenameFn) {
-    Object.keys(breakpoints).forEach(breakpoint => {
-      const componentName = componentRenameFn ? componentRenameFn(breakpoint) : capitalizeFirstLetter(breakpoint)
-      this[componentName] = withBreakpoints(({ children, breakpoints }) => breakpoints[breakpoint] && children)
+    Object.keys(breakpoints).forEach(breakpointName => {
+      const componentName = componentRenameFn
+        ? componentRenameFn(breakpointName)
+        : capitalizeFirstLetter(breakpointName)
+
+      this[componentName] = withBreakpoints(({ children, breakpoints }) => {
+        return breakpoints && breakpoints[breakpointName] ? children : null
+      })
       this[componentName].displayName = `Breakpoints.${componentName}`
     })
   }
 }
 
-const breakpointsStoreInstance = new Proxy(new BreakpointsStore(), {
-  get: function(target, name) {
-    if (!(name in target) && name !== '__esModule') {
-      if (process.env.NODE_ENV !== 'production') {
-        warning(
-          false,
-          `[React Match Breakpoints] You are trying to use component (${
-            name
-          }) that name doesn\'t match any breakpoint you have provided. Current breakpoints components names: ${Object.keys(
-            target
-          ).join(', ')}`
-        )
-      }
-      return () => null
-    }
-    return target[name]
+export const breakpointsStoreInstance = new BreakpointsStore()
+export const proxiedBreakpointsStoreInstance = new Proxy(breakpointsStoreInstance, {
+  get: (target, propKey) => {
+    const shouldNotShowWarning = propKey in target || propKey === '__esModule' || process.env.NODE_ENV === 'production'
+
+    warning(
+      shouldNotShowWarning,
+      '[React Match Breakpoints] You are trying to use component(' +
+        propKey +
+        '). ' +
+        "That name doesn't match any breakpoint you have provided. " +
+        'Current breakpoints components names are: ' +
+        Object.keys(target).join(', ')
+    )
+
+    return shouldNotShowWarning ? target[propKey] : () => null
   },
 })
-
-export default breakpointsStoreInstance
