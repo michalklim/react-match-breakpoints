@@ -2,7 +2,11 @@
   "name": "react-match-breakpoints",
   "version": "0.1.0",
   "description": "Connected breakpoints for react application",
-  "main": "dist/index.js",
+  "main": "dist/react-match-breakpoints.js",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/michalklim/react-match-breakpoints.git"
+  },
   "scripts": {
     "build": "webpack --env dev && webpack --env build && npm run test",
     "test": "jest --coverage",
