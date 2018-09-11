@@ -28,7 +28,11 @@ const generateDummyComponent = () => {
 describe('@withBreakpoints', () => {
   it('renders without crashing', () => {
     const WrappedComponent = withBreakpoints(generateDummyComponent())
-    shallow(<WrappedComponent />)
+    shallow(
+      <Provider breakpoints={breakpoints}>
+        <WrappedComponent />
+      </Provider>
+    )
   })
 
   it('matches the snapshot', () => {
@@ -47,7 +51,9 @@ describe('@withBreakpoints', () => {
       </Provider>
     )
 
-    expect(wrapper.find(Component).props()).toEqual({ breakpoints: { ...stateMediaBreakpoints } })
+    expect(wrapper.find(Component).props().breakpoints).toEqual({ ...stateMediaBreakpoints })
+
+    wrapper.unmount()
   })
 
   it('should allow other props to pass through', () => {
@@ -60,6 +66,8 @@ describe('@withBreakpoints', () => {
     )
 
     expect(wrapper.find(Component).props()).toHaveProperty('className', 'test')
+
+    wrapper.unmount()
   })
 
   it('should have informational display name', () => {
@@ -73,5 +81,7 @@ describe('@withBreakpoints', () => {
     )
 
     expect(wrapper.find(WrappedComponent).name()).toEqual('withBreakpoints(TestComponent)')
+
+    wrapper.unmount()
   })
 })
