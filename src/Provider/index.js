@@ -3,23 +3,16 @@ import PropTypes from 'prop-types'
 import warning from 'warning'
 
 import Context from '../Context'
-import breakpointsStoreInstance from '../Breakpoints'
 
 class Provider extends Component {
-  state = {
-    breakpoints: {},
-  }
+  state = {}
   constructor(props) {
     super(props)
-    const { breakpoints, componentRenameFn } = props
+    const { breakpoints } = props
 
     if (!!breakpoints) {
       const matchMediaBreakpoints = this.buildMatchMediaBreakpoints(breakpoints)
-      const stateBreakpoints = this.buildBooleanBreakpoints(matchMediaBreakpoints)
-
-      breakpointsStoreInstance.buildBreakpointsComponents(stateBreakpoints, componentRenameFn)
-
-      this.state = stateBreakpoints
+      this.state = this.buildBooleanBreakpoints(matchMediaBreakpoints)
     } else if (process.env.NODE_ENV !== 'production') {
       warning(
         !!breakpoints,
