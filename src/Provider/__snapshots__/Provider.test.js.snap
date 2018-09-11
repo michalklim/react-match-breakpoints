@@ -10,8 +10,6 @@ exports[`<Provider /> matches the snapshot 1`] = `
     }
   }
 >
-  <div>
-    test
-  </div>
+  <div />
 </ContextProvider>
 `;
