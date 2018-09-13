@@ -7,6 +7,13 @@
     "type": "git",
     "url": "https://github.com/michalklim/react-match-breakpoints.git"
   },
+  "keywords": [
+    "react",
+    "responsive",
+    "breakpoints",
+    "matchMedia",
+    "rwd"
+  ],
   "scripts": {
     "build": "webpack --env dev && webpack --env build && npm run test",
     "test": "jest --coverage",
