@@ -1,13 +1,13 @@
 import React from 'react'
 import warning from 'warning'
 
-import { capitalizeFirstLetter } from '../utils'
+import { capitalize } from '../utils'
 import withBreakpoints from '../withBreakpoints'
 
 class BreakpointsStore {
   buildBreakpointsComponents(queries, componentRenameFn) {
     Object.keys(queries).forEach(queryName => {
-      const componentName = componentRenameFn ? componentRenameFn(queryName) : capitalizeFirstLetter(queryName)
+      const componentName = componentRenameFn ? componentRenameFn(queryName) : capitalize(queryName)
 
       this[componentName] = withBreakpoints(({ children, breakpoints }) => {
         return breakpoints && breakpoints[queryName] ? children : null
