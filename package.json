@@ -4,8 +4,8 @@
   "description": "Connected breakpoints for react application",
   "main": "dist/react-match-breakpoints.js",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/michalklim/react-match-breakpoints.git"
+    "type": "git",
+    "url": "https://github.com/michalklim/react-match-breakpoints.git"
   },
   "scripts": {
     "build": "webpack --env dev && webpack --env build && npm run test",
@@ -81,7 +81,11 @@
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{js,jsx,mjs}"
     ],
-    "coveragePathIgnorePatterns": ["<rootDir>/src/index.js", "<rootDir>/src/setupTests.js"],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/index.js",
+      "<rootDir>/src/utils/index.js",
+      "<rootDir>/src/setupTests.js"
+    ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
       "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
