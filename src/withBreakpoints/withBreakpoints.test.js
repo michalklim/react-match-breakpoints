@@ -2,10 +2,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import toJson from 'enzyme-to-json'
 
-import withBreakpoints from '../withBreakpoints'
-import Provider from '../Provider'
-
-const breakpoints = {
+const mediaQueries = {
   isMobile: `screen and (max-width: 500px)`,
   isTablet: `screen and (min-width: 500px) and (max-width: 1200px)`,
   isDesktop: `screen and (min-width: 1201px)`,
@@ -17,8 +14,16 @@ const stateMediaBreakpoints = {
   isDesktop: false,
 }
 
+let createBreakpoints
+let Provider
+let withBreakpoints
+
 beforeEach(() => {
   jest.resetModules()
+
+  createBreakpoints = require('../createBreakpoints')
+  Provider = require('../Provider')
+  withBreakpoints = require('../withBreakpoints')
 })
 
 const generateDummyComponent = () => {
@@ -27,6 +32,7 @@ const generateDummyComponent = () => {
 
 describe('@withBreakpoints', () => {
   it('renders without crashing', () => {
+    const breakpoints = createBreakpoints(mediaQueries)
     const WrappedComponent = withBreakpoints(generateDummyComponent())
     shallow(
       <Provider breakpoints={breakpoints}>
@@ -43,6 +49,7 @@ describe('@withBreakpoints', () => {
   })
 
   it('should pass breakpoints state down to wrapped component', () => {
+    const breakpoints = createBreakpoints(mediaQueries)
     const Component = generateDummyComponent()
     const WrappedComponent = withBreakpoints(Component)
     const wrapper = mount(
@@ -57,6 +64,7 @@ describe('@withBreakpoints', () => {
   })
 
   it('should allow other props to pass through', () => {
+    const breakpoints = createBreakpoints(mediaQueries)
     const Component = generateDummyComponent()
     const WrappedComponent = withBreakpoints(Component)
     const wrapper = mount(
@@ -71,6 +79,7 @@ describe('@withBreakpoints', () => {
   })
 
   it('should have informational display name', () => {
+    const breakpoints = createBreakpoints(mediaQueries)
     const Component = generateDummyComponent()
     Component.displayName = 'TestComponent'
     const WrappedComponent = withBreakpoints(Component)

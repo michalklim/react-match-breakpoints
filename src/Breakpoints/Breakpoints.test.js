@@ -1,21 +1,21 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 
-const breakpoints = {
+const mediaQueries = {
   isMobile: `screen and (max-width: 500px)`,
   isTablet: `screen and (min-width: 500px) and (max-width: 1200px)`,
   isDesktop: `screen and (min-width: 1201px)`,
 }
 
-let Breakpoints = require('../Breakpoints').proxiedBreakpointsStoreInstance
-let createBreakpointsComponents = require('../createBreakpointsComponents')
-let Provider = require('../Provider')
+let Breakpoints
+let createBreakpoints
+let Provider
 
 beforeEach(() => {
   jest.resetModules()
 
   Breakpoints = require('../Breakpoints').proxiedBreakpointsStoreInstance
-  createBreakpointsComponents = require('../createBreakpointsComponents')
+  createBreakpoints = require('../createBreakpoints')
   Provider = require('../Provider')
 })
 
@@ -25,7 +25,7 @@ afterEach(() => {
 
 describe('<Breakpoints />', () => {
   it('builds components based on provided breakpoints names', () => {
-    createBreakpointsComponents(breakpoints)
+    const breakpoints = createBreakpoints(mediaQueries)
 
     const wrapper = mount(
       <Provider breakpoints={breakpoints}>
@@ -43,7 +43,7 @@ describe('<Breakpoints />', () => {
   it('shows error message in console when trying to access Component that is not there', () => {
     const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
 
-    createBreakpointsComponents(breakpoints)
+    const breakpoints = createBreakpoints(mediaQueries)
 
     shallow(
       <Provider breakpoints={breakpoints}>
@@ -64,7 +64,7 @@ describe('<Breakpoints />', () => {
   it('renders child component only when breakpoint match', () => {
     const OnlyVisibleOnMobile = () => <div>test</div>
 
-    createBreakpointsComponents(breakpoints)
+    const breakpoints = createBreakpoints(mediaQueries)
 
     const wrapper = mount(
       <Provider breakpoints={breakpoints}>

@@ -8,14 +8,14 @@ class Provider extends Component {
   state = {}
   constructor(props) {
     super(props)
-    const { breakpoints } = props
+    const { breakpoints: { queries } } = props
 
-    if (!!breakpoints) {
-      const matchMediaBreakpoints = this.buildMatchMediaBreakpoints(breakpoints)
+    if (!!queries) {
+      const matchMediaBreakpoints = this.buildMatchMediaBreakpoints(queries)
       this.state = this.buildBooleanBreakpoints(matchMediaBreakpoints)
     } else if (process.env.NODE_ENV !== 'production') {
       warning(
-        !!breakpoints,
+        false,
         "[React Match Breakpoints] It seems that you didn't provide valid breakpoints object to the provider"
       )
     }

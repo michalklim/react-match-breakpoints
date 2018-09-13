@@ -6,19 +6,19 @@ const breakpoints = {
   isDesktop: `screen and (min-width: 1201px)`,
 }
 
-let createBreakpointsComponents
+let createBreakpoints
 let breakpointsStoreInstance
 
 beforeEach(() => {
   jest.resetModules()
 
-  createBreakpointsComponents = require('../createBreakpointsComponents')
+  createBreakpoints = require('../createBreakpoints')
   breakpointsStoreInstance = require('../Breakpoints').breakpointsStoreInstance
 })
 
-describe('createBreakpointsComponents', () => {
+describe('createBreakpoints', () => {
   it('builds components with uppercase first letter', () => {
-    createBreakpointsComponents(breakpoints)
+    createBreakpoints(breakpoints)
 
     expect(breakpointsStoreInstance).toEqual(
       expect.objectContaining({
@@ -32,7 +32,7 @@ describe('createBreakpointsComponents', () => {
   it('renames components if user provide rename method', () => {
     const renameFn = breakpointName => `${breakpointName}Test`
 
-    createBreakpointsComponents(breakpoints, renameFn)
+    createBreakpoints(breakpoints, renameFn)
 
     expect(breakpointsStoreInstance).toEqual(
       expect.objectContaining({

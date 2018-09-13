@@ -5,14 +5,12 @@ import { capitalizeFirstLetter } from '../utils'
 import withBreakpoints from '../withBreakpoints'
 
 class BreakpointsStore {
-  buildBreakpointsComponents(breakpoints, componentRenameFn) {
-    Object.keys(breakpoints).forEach(breakpointName => {
-      const componentName = componentRenameFn
-        ? componentRenameFn(breakpointName)
-        : capitalizeFirstLetter(breakpointName)
+  buildBreakpointsComponents(queries, componentRenameFn) {
+    Object.keys(queries).forEach(queryName => {
+      const componentName = componentRenameFn ? componentRenameFn(queryName) : capitalizeFirstLetter(queryName)
 
       this[componentName] = withBreakpoints(({ children, breakpoints }) => {
-        return breakpoints && breakpoints[breakpointName] ? children : null
+        return breakpoints && breakpoints[queryName] ? children : null
       })
       this[componentName].displayName = `Breakpoints.${componentName}`
     })
