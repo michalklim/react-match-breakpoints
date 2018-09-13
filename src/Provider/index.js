@@ -56,7 +56,10 @@ class Provider extends Component {
 }
 
 Provider.propTypes = {
-  breakpoints: PropTypes.object.isRequired,
+  breakpoints: PropTypes.shape({
+    queries: PropTypes.object.isRequired,
+    componentRenameFn: PropTypes.func,
+  }),
 }
 
 export default Provider
