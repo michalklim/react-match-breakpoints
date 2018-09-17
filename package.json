@@ -21,11 +21,10 @@
     "build": "webpack --env dev && webpack --env build && npm run test",
     "test": "jest --coverage",
     "test:watch": "npm test -- --watch",
-    "start": "npm run start:dev && npm run start:docs",
+    "start": "npm run start:dev",
     "start:dev": "webpack --progress --colors --watch --env dev",
-    "start:docs": "npm --prefix ./docs install && npm --prefix ./docs start",
     "prettier": "prettier --single-quote --print-width=120 --trailing-comma es5 --no-semi",
-    "format": "npm run prettier -- --write '{,!(dist|docs)/**/}*.js'",
+    "format": "npm run prettier -- --write '{,!(dist|examples)/**/}*.js'",
     "precommit": "lint-staged",
     "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "lint": "eslint **/*.js --quiet",
@@ -87,7 +86,7 @@
     "warning": "^4.0.2"
   },
   "lint-staged": {
-    "{,!(dist|docs)/**/}*.js": [
+    "{,!(dist|examples)/**/}*.js": [
       "npm run prettier -- --write",
       "git add"
     ]
