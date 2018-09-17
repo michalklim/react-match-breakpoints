@@ -2,7 +2,6 @@ import React from 'react'
 import { Provider as BreakpointsProvider, createBreakpoints } from 'react-match-breakpoints'
 
 import Page from './Page.js'
-import './App.css'
 
 const mediaQueries = {
   mobile: 'screen and (max-width: 736px)',

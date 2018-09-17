@@ -1,1 +1,1 @@
-# React Match Breakpoints-Using Breakpoints example
+# React Match Breakpoints-Using Breakpoints Example
