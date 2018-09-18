@@ -1,0 +1,17 @@
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f1fcf5;
+    font-size: 3rem;
+    font-family: monospace;
+    text-align: center;
+}
+
+figcaption {
+    font-size: 1rem;
+    margin: 1rem 0 0 0;
+    text-align: center;
+    color: #7c0c84;
+}
