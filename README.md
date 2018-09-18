@@ -17,10 +17,10 @@ Lightweight and easy to use media query library for React. Define your media que
 React Match Breakpoints **(RMB)** goal is to provide a consistent way of handling responsiveness in you React app.
 Though similar in some ways to other solutions like [react-responsive](https://github.com/contra/react-responsive) or [react-media](https://github.com/ReactTraining/react-media) 
 RMB differs in core concepts: 
-* You should be able to use RMB with ease both as React components and HOC function. 
+- You should be able to use RMB with ease both as React components and HOC function. 
 Regardless in what way you will be using RMB, your breakpoints configuration should be SSOT.
 
-* RMB should make no assumptions regarding how you media queries should look like. 
+- RMB should make no assumptions regarding how you media queries should look like. 
 RMB is built on top of [matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) API so you can pass any media query
 string that is handled by it. This approach gives you a lot of flexibility and works great with solutions like [styled-components](https://github.com/styled-components/styled-components) since
 you can declare your media queries once and use them both in your styles and layout.
@@ -69,6 +69,7 @@ Now you can access your defined breakpoints either using `withBreakpoints` HOC o
 
 ```jsx
 // App.js
+
 import React, {Component} from 'react'
 import {
   Breakpoints, 
@@ -126,7 +127,7 @@ const mediaQueries = {
   isTablet: 'screen and (min-width: 768px) and (max-width: 1024px)'
 }
 
-const renameFn = breakpointName => breakPointName.replace('is', '')
+const renameFn = breakpointName => breakpointName.replace('is', '')
 
 const breakpoints = createBreakpoints(mediaQueries, renameFn)
 
@@ -149,13 +150,16 @@ ReactDOM.render(
 
 ## Examples
 
-TODO
+ - [Using Breakpoints](https://88nol5480l.codesandbox.io/)
+ - [Using withBreakpoints](https://9zwwr30x8y.codesandbox.io/)
+ - [Renaming Breakpoints](https://8z1r83j8lj.codesandbox.io/)
+ - [Accessing non defined Breakpoints](https://codesandbox.io/s/github/michalklim/react-match-breakpoints/tree/master/examples/accessing-non-defined-breakpoints?expanddevtools=1)
 
 ## Browser Support
 
 RMB is supported basically by every browser that implements the full ES5 spec. It might be a good idea to include [matchMedia polyfill](https://github.com/paulirish/matchMedia.js/) for some older browsers.
 
-**Note:** on browsers that don't support `Proxy` you won't see warnings if you try to access Breakpoints components that are not defined.
+**Note:** On browsers that don't support `Proxy` you won't see warnings if you try to access Breakpoints components that are not defined.
 
 ## Roadmap
 
