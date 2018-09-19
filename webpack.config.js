@@ -1,13 +1,9 @@
-/* global __dirname, require, module*/
-
+/* global require, module*/
 const webpack = require('webpack')
 const path = require('path')
-const env = require('yargs').argv.env // use --env with webpack 2
 const pkg = require('./package.json')
 
 let libraryName = pkg.name
-
-let outputFile, mode
 
 const reactExternal = {
   root: 'React',
@@ -16,34 +12,33 @@ const reactExternal = {
   amd: 'react',
 }
 
-if (env === 'build') {
-  mode = 'production'
-  outputFile = libraryName + '.min.js'
-} else {
-  mode = 'development'
-  outputFile = libraryName + '.js'
-}
-
-const config = {
-  mode: mode,
-  entry: __dirname + '/src/index.js',
+module.exports = env => ({
   externals: {
     react: reactExternal,
   },
-  devtool: 'source-map',
+  mode: env.production ? 'production' : 'development',
+  devtool: env.production ? 'source-maps' : 'eval',
+  entry: path.resolve('./src/index.js'),
   output: {
-    path: __dirname + '/dist',
-    filename: outputFile,
-    library: libraryName,
+    path: path.resolve('./dist'),
+    filename: libraryName + (env.production ? '.min' : '') + '.js',
     libraryTarget: 'umd',
-    umdNamedDefine: true,
+    library: 'react-match-breakpoints',
   },
   module: {
     rules: [
       {
-        test: /(\.jsx|\.js)$/,
-        loader: 'babel-loader',
-        exclude: /(node_modules|bower_components)/,
+        enforce: 'pre',
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: 'eslint-loader',
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
       },
     ],
   },
@@ -51,6 +46,4 @@ const config = {
     modules: [path.resolve('./node_modules'), path.resolve('./src')],
     extensions: ['.json', '.js'],
   },
-}
-
-module.exports = config
+})
