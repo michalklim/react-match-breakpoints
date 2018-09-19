@@ -1,9 +1,9 @@
 import React from 'react'
 
 const breakpoints = {
-  isMobile: `screen and (max-width: 500px)`,
-  isTablet: `screen and (min-width: 500px) and (max-width: 1200px)`,
-  isDesktop: `screen and (min-width: 1201px)`,
+  isMobile: 'screen and (max-width: 500px)',
+  isTablet: 'screen and (min-width: 500px) and (max-width: 1200px)',
+  isDesktop: 'screen and (min-width: 1201px)',
 }
 
 let createBreakpoints

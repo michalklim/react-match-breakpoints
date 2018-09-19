@@ -1,4 +1,5 @@
-import React from 'react'
+/* global process */
+
 import warning from 'warning'
 
 import { capitalize } from '../utils'
@@ -9,9 +10,9 @@ class BreakpointsStore {
     Object.keys(queries).forEach(queryName => {
       const componentName = componentRenameFn ? componentRenameFn(queryName) : capitalize(queryName)
 
-      this[componentName] = withBreakpoints(({ children, breakpoints }) => {
-        return breakpoints && breakpoints[queryName] ? children : null
-      })
+      this[componentName] = withBreakpoints(
+        ({ children, breakpoints }) => (breakpoints && breakpoints[queryName] ? children : null)
+      )
       this[componentName].displayName = `Breakpoints.${componentName}`
     })
   }
@@ -20,7 +21,8 @@ class BreakpointsStore {
 export const breakpointsStoreInstance = new BreakpointsStore()
 export const proxiedBreakpointsStoreInstance = new Proxy(breakpointsStoreInstance, {
   get: (target, propKey) => {
-    const shouldNotShowWarning = propKey in target || propKey === '__esModule' || process.env.NODE_ENV === 'production'
+    const shouldNotShowWarning =
+      propKey in target || propKey === '__esModule' || process.env.NODE_ENV === 'production'
 
     warning(
       shouldNotShowWarning,

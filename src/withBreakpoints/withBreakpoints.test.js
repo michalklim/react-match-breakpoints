@@ -3,9 +3,9 @@ import { shallow, mount } from 'enzyme'
 import toJson from 'enzyme-to-json'
 
 const mediaQueries = {
-  isMobile: `screen and (max-width: 500px)`,
-  isTablet: `screen and (min-width: 500px) and (max-width: 1200px)`,
-  isDesktop: `screen and (min-width: 1201px)`,
+  isMobile: 'screen and (max-width: 500px)',
+  isTablet: 'screen and (min-width: 500px) and (max-width: 1200px)',
+  isDesktop: 'screen and (min-width: 1201px)',
 }
 
 const stateMediaBreakpoints = {
