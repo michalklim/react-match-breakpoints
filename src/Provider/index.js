@@ -1,5 +1,4 @@
 import React, { Component, Children } from 'react'
-import PropTypes from 'prop-types'
 import warning from 'warning'
 
 import Context from '../Context'
@@ -10,7 +9,7 @@ class Provider extends Component {
     super(props)
     const { breakpoints: { queries } } = props
 
-    if (!!queries) {
+    if (queries) {
       const matchMediaBreakpoints = this.buildMatchMediaBreakpoints(queries)
       this.state = this.buildBooleanBreakpoints(matchMediaBreakpoints)
     } else if (process.env.NODE_ENV !== 'production') {
@@ -51,15 +50,10 @@ class Provider extends Component {
   }
 
   render() {
-    return <Context.Provider value={this.state}>{Children.only(this.props.children)}</Context.Provider>
+    return (
+      <Context.Provider value={this.state}>{Children.only(this.props.children)}</Context.Provider>
+    )
   }
-}
-
-Provider.propTypes = {
-  breakpoints: PropTypes.shape({
-    queries: PropTypes.object.isRequired,
-    componentRenameFn: PropTypes.func,
-  }),
 }
 
 export default Provider
