@@ -1,5 +1,6 @@
 import React, { Component, Children } from 'react'
 import warning from 'warning'
+import { isWindowDefined } from '../utils'
 
 import Context from '../Context'
 
@@ -10,7 +11,7 @@ class Provider extends Component {
     const { breakpoints: { queries } } = props
 
     if (queries) {
-      const matchMediaBreakpoints = this.buildMatchMediaBreakpoints(queries)
+      const matchMediaBreakpoints = isWindowDefined ? this.buildMatchMediaBreakpoints(queries) : {}
       this.state = this.buildBooleanBreakpoints(matchMediaBreakpoints)
     } else if (process.env.NODE_ENV !== 'production') {
       warning(
