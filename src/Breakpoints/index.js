@@ -1,20 +1,46 @@
 /* global process */
-
+import get from 'lodash/get'
 import warning from 'warning'
 
-import { capitalize } from '../utils'
+import { capitalize, isObject } from '../utils'
 import withBreakpoints from '../withBreakpoints'
 
 class BreakpointsStore {
-  buildBreakpointsComponents(queries, componentRenameFn) {
-    Object.keys(queries).forEach(queryName => {
-      const componentName = componentRenameFn ? componentRenameFn(queryName) : capitalize(queryName)
+  generateComponents(components, renameFn, parentPath, parentObj) {
+    return Object.keys(components).forEach(componentKey => {
+      const rename = item => (renameFn ? renameFn(item) : capitalize(item))
+      const componentName = rename(componentKey)
+      const componentValue = components[componentKey]
 
-      this[componentName] = withBreakpoints(
-        ({ children, breakpoints }) => (breakpoints && breakpoints[queryName] ? children : null)
-      )
-      this[componentName].displayName = `Breakpoints.${componentName}`
-    })
+      if (isObject(componentValue)) {
+        parentObj[componentName] = {}
+        this.generateComponents(
+          componentValue,
+          renameFn,
+          [...parentPath, componentKey],
+          parentObj[componentName]
+        )
+      } else {
+        const breakpointsPath = parentPath.length
+          ? `${parentPath.join('.')}.${componentKey}`
+          : componentKey
+
+        const Component = withBreakpoints(
+          ({ children, breakpoints }) =>
+            breakpoints && get(breakpoints, breakpointsPath) ? children : null
+        )
+
+        Component.displayName = parentPath.length
+          ? `Breakpoints.${parentPath.map(rename).join('.')}.${componentName}`
+          : `Breakpoints.${componentName}`
+
+        parentObj[componentName] = Component
+      }
+    }, {})
+  }
+
+  buildBreakpointsComponents(config, componentRenameFn) {
+    this.generateComponents(config, componentRenameFn, [], this)
   }
 }
 

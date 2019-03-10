@@ -5,19 +5,28 @@ import toJson from 'enzyme-to-json'
 const mediaQueries = {
   isMobile: 'screen and (max-width: 500px)',
   isTablet: 'screen and (min-width: 500px) and (max-width: 1200px)',
-  isDesktop: 'screen and (min-width: 1201px)',
+  isDesktop: {
+    regular: 'screen and (min-width: 1201px)',
+    big: 'screen and (min-width: 1440px)',
+  },
 }
 
 const matchMediaBreakpoints = {
   isMobile: window.matchMedia('screen and (max-width: 500px)'),
   isTablet: window.matchMedia('screen and (min-width: 500px) and (max-width: 1200px)'),
-  isDesktop: window.matchMedia('screen and (min-width: 1201px)'),
+  isDesktop: {
+    regular: window.matchMedia('screen and (min-width: 1201px)'),
+    big: window.matchMedia('screen and (min-width: 1440px)'),
+  },
 }
 
 const stateMediaBreakpoints = {
   isMobile: false,
   isTablet: false,
-  isDesktop: false,
+  isDesktop: {
+    regular: false,
+    big: false,
+  },
 }
 
 let createBreakpoints
@@ -88,7 +97,10 @@ describe('<Provider /> buildMatchMediaBreakpoints method', () => {
     expect(returnObject).toEqual({
       [breakpointsKeys[0]]: getMatchMediaObject(mediaQueries[breakpointsKeys[0]]),
       [breakpointsKeys[1]]: getMatchMediaObject(mediaQueries[breakpointsKeys[1]]),
-      [breakpointsKeys[2]]: getMatchMediaObject(mediaQueries[breakpointsKeys[2]]),
+      [breakpointsKeys[2]]: {
+        regular: getMatchMediaObject(mediaQueries[breakpointsKeys[2]].regular),
+        big: getMatchMediaObject(mediaQueries[breakpointsKeys[2]].big),
+      },
     })
   })
 })
@@ -107,8 +119,8 @@ describe('<Provider /> buildBooleanBreakpoints method', () => {
   })
 })
 
-describe('<Provider /> setActiveBreakpoint method', () => {
-  it('set given breakpoint in state to true', () => {
+describe('<Provider /> setBreakpointState method', () => {
+  it('set given breakpoint in state', () => {
     const breakpoints = createBreakpoints(mediaQueries)
     const wrapper = shallow(
       <Provider breakpoints={breakpoints}>
@@ -118,14 +130,12 @@ describe('<Provider /> setActiveBreakpoint method', () => {
 
     expect(wrapper.instance().state).toEqual({ ...stateMediaBreakpoints })
 
-    wrapper.instance().setActiveBreakpoint('isMobile')
+    wrapper.instance().setBreakpointState(['isMobile'], true)
 
     expect(wrapper.instance().state).toEqual({ ...stateMediaBreakpoints, isMobile: true })
   })
-})
 
-describe('<Provider /> unsetActiveBreakpoint method', () => {
-  it('set given breakpoint in state to false', () => {
+  it('set given nested breakpoint in state', () => {
     const breakpoints = createBreakpoints(mediaQueries)
     const wrapper = shallow(
       <Provider breakpoints={breakpoints}>
@@ -133,13 +143,16 @@ describe('<Provider /> unsetActiveBreakpoint method', () => {
       </Provider>
     )
 
-    wrapper.setState({
+    expect(wrapper.instance().state).toEqual({ ...stateMediaBreakpoints })
+
+    wrapper.instance().setBreakpointState(['isDesktop', 'big'], true)
+
+    expect(wrapper.instance().state).toEqual({
       ...stateMediaBreakpoints,
-      isMobile: true,
+      isDesktop: {
+        ...stateMediaBreakpoints.isDesktop,
+        big: true,
+      },
     })
-
-    wrapper.instance().unsetActiveBreakpoint('isMobile')
-
-    expect(wrapper.instance().state).toEqual({ ...stateMediaBreakpoints, isMobile: false })
   })
 })

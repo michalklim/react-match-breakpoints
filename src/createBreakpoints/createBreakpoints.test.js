@@ -6,6 +6,18 @@ const breakpoints = {
   isDesktop: 'screen and (min-width: 1201px)',
 }
 
+const nestedBreakpoints = {
+  isMobile: {
+    small: 'screen and (max-width: 500px)',
+    big: 'screen and (max-width: 500px)',
+  },
+  isTablet: {
+    small: 'screen and (max-width: 500px)',
+    big: 'screen and (max-width: 500px)',
+  },
+  isDesktop: 'screen and (min-width: 1201px)',
+}
+
 let createBreakpoints
 let breakpointsStoreInstance
 
@@ -39,6 +51,24 @@ describe('createBreakpoints', () => {
         isMobileTest: expect.any(Function),
         isTabletTest: expect.any(Function),
         isDesktopTest: expect.any(Function),
+      })
+    )
+  })
+
+  it('Correctly builds nested components', () => {
+    createBreakpoints(nestedBreakpoints)
+
+    expect(breakpointsStoreInstance).toEqual(
+      expect.objectContaining({
+        IsMobile: {
+          Small: expect.any(Function),
+          Big: expect.any(Function),
+        },
+        IsTablet: {
+          Small: expect.any(Function),
+          Big: expect.any(Function),
+        },
+        IsDesktop: expect.any(Function),
       })
     )
   })

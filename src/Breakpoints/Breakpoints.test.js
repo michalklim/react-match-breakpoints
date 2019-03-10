@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { shallow, mount } from 'enzyme'
 
 const mediaQueries = {
-  isMobile: 'screen and (max-width: 500px)',
+  isMobile: {
+    small: 'screen and (max-width: 300px)',
+    big: 'screen and (max-width: 500px)',
+  },
   isTablet: 'screen and (min-width: 500px) and (max-width: 1200px)',
   isDesktop: 'screen and (min-width: 1201px)',
 }
@@ -30,7 +33,8 @@ describe('<Breakpoints />', () => {
     const wrapper = mount(
       <Provider breakpoints={breakpoints}>
         <div>
-          <Breakpoints.IsMobile />
+          <Breakpoints.IsMobile.Small />
+          <Breakpoints.IsMobile.Big />
           <Breakpoints.IsTablet />
           <Breakpoints.IsDesktop />
         </div>
@@ -62,28 +66,50 @@ describe('<Breakpoints />', () => {
   })
 
   it('renders child component only when breakpoint match', () => {
-    const OnlyVisibleOnMobile = () => <div>test</div>
+    const OnlyVisibleOnBigMobile = () => <div>mobile</div>
+    const OnlyVisibleOnTablet = () => <div>tablet</div>
 
     const breakpoints = createBreakpoints(mediaQueries)
 
     const wrapper = mount(
       <Provider breakpoints={breakpoints}>
-        <Breakpoints.IsMobile>
-          <OnlyVisibleOnMobile />
-        </Breakpoints.IsMobile>
+        <Fragment>
+          <Breakpoints.IsMobile.Big>
+            <OnlyVisibleOnBigMobile />
+          </Breakpoints.IsMobile.Big>
+          <Breakpoints.IsTablet>
+            <OnlyVisibleOnTablet />
+          </Breakpoints.IsTablet>
+        </Fragment>
       </Provider>
     )
 
-    expect(wrapper.contains(OnlyVisibleOnMobile)).not.toBeTruthy()
+    expect(wrapper.contains(OnlyVisibleOnBigMobile)).not.toBeTruthy()
+    expect(wrapper.contains(OnlyVisibleOnTablet)).not.toBeTruthy()
 
     // Simulate mobile breakpoint
     wrapper.setState({
-      isMobile: true,
+      isMobile: {
+        big: true,
+        small: false,
+      },
       isTablet: false,
       isDesktop: false,
     })
 
-    expect(wrapper.contains(OnlyVisibleOnMobile)).toBeTruthy()
+    expect(wrapper.contains(OnlyVisibleOnBigMobile)).toBeTruthy()
+
+    // Simulate tablet breakpoint
+    wrapper.setState({
+      isMobile: {
+        big: false,
+        small: false,
+      },
+      isTablet: true,
+      isDesktop: false,
+    })
+
+    expect(wrapper.contains(OnlyVisibleOnTablet)).toBeTruthy()
 
     wrapper.unmount()
   })

@@ -7,10 +7,15 @@ function Page() {
   return (
     <div className="container">
       <figure>
-        <Breakpoints.Mobile>
+        <Breakpoints.Mobile.Small>
           📱
-          <figcaption>I'm mobile</figcaption>
-        </Breakpoints.Mobile>
+          <figcaption>I'm small mobile</figcaption>
+        </Breakpoints.Mobile.Small>
+
+        <Breakpoints.Mobile.Big>
+          📱📱
+          <figcaption>I'm big mobile</figcaption>
+        </Breakpoints.Mobile.Big>
 
         <Breakpoints.Tablet>
           📱📱 📱📱

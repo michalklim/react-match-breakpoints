@@ -1,7 +1,9 @@
 import React, { Component, Children } from 'react'
 import warning from 'warning'
+import set from 'lodash/set'
 
 import Context from '../Context'
+import isObject from '../utils/isObject'
 
 class Provider extends Component {
   state = {}
@@ -20,33 +22,51 @@ class Provider extends Component {
     }
   }
 
-  buildBooleanBreakpoints = matchMediaBreakpoints => {
-    return Object.keys(matchMediaBreakpoints).reduce((acc, breakpoint) => {
-      acc[breakpoint] = matchMediaBreakpoints[breakpoint].matches
-      return acc
+  buildBooleanBreakpoints = obj => {
+    return Object.keys(obj).reduce((acc, key) => {
+      if (obj[key].matches === undefined) {
+        return {
+          ...acc,
+          [key]: this.buildBooleanBreakpoints(obj[key]),
+        }
+      } else {
+        return {
+          ...acc,
+          [key]: obj[key].matches,
+        }
+      }
     }, {})
   }
 
-  buildMatchMediaBreakpoints = breakpoints => {
+  buildMatchMediaBreakpoints = (breakpoints, parent) => {
     return Object.keys(breakpoints).reduce((acc, breakpoint) => {
-      acc[breakpoint] = window.matchMedia(breakpoints[breakpoint])
-      acc[breakpoint].addListener(mq => {
-        mq.matches ? this.setActiveBreakpoint(breakpoint) : this.unsetActiveBreakpoint(breakpoint)
-      })
-      return acc
+      const breakpointQuery = breakpoints[breakpoint]
+      const breakpointStatePath = parent ? [...parent, breakpoint] : [breakpoint]
+
+      if (isObject(breakpointQuery)) {
+        return {
+          ...acc,
+          [breakpoint]: this.buildMatchMediaBreakpoints(breakpointQuery, breakpointStatePath),
+        }
+      } else {
+        const matchMedia = window.matchMedia(breakpointQuery)
+
+        matchMedia.addListener(mq => {
+          mq.matches
+            ? this.setBreakpointState(breakpointStatePath, true)
+            : this.setBreakpointState(breakpointStatePath, false)
+        })
+
+        return {
+          ...acc,
+          [breakpoint]: matchMedia,
+        }
+      }
     }, {})
   }
 
-  setActiveBreakpoint = breakpoint => {
-    this.setState({
-      [breakpoint]: true,
-    })
-  }
-
-  unsetActiveBreakpoint = breakpoint => {
-    this.setState({
-      [breakpoint]: false,
-    })
+  setBreakpointState = (path, state) => {
+    this.setState(prevState => set(prevState, path.join('.'), state))
   }
 
   render() {
