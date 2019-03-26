@@ -62,7 +62,7 @@ describe('<Provider />', () => {
   })
 
   it('it passes breakpoints state to context provider', () => {
-    const breakpoints = createBreakpoints(mediaQueries)
+    const breakpoints = createBreakpoints(mediaQueries, null, stateMediaBreakpoints)
 
     const wrapper = shallow(
       <Provider breakpoints={breakpoints}>
@@ -121,7 +121,7 @@ describe('<Provider /> buildBooleanBreakpoints method', () => {
 
 describe('<Provider /> setBreakpointState method', () => {
   it('set given breakpoint in state', () => {
-    const breakpoints = createBreakpoints(mediaQueries)
+    const breakpoints = createBreakpoints(mediaQueries, null, stateMediaBreakpoints)
     const wrapper = shallow(
       <Provider breakpoints={breakpoints}>
         <div />
@@ -136,7 +136,7 @@ describe('<Provider /> setBreakpointState method', () => {
   })
 
   it('set given nested breakpoint in state', () => {
-    const breakpoints = createBreakpoints(mediaQueries)
+    const breakpoints = createBreakpoints(mediaQueries, null, stateMediaBreakpoints)
     const wrapper = shallow(
       <Provider breakpoints={breakpoints}>
         <div />

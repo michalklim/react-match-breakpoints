@@ -12,13 +12,15 @@ class Provider extends Component {
     const { breakpoints: { queries, serverQueries } } = props
 
     if (queries) {
-      if (isServer && serverQueries) {
-        this.state = serverQueries
-      } else if (isServer && !serverQueries) {
-        warning(
-          false,
-          "[React Match Breakpoints] It seems that you try to use RMB on server environment but you didn't provide server breakpoints"
-        )
+      if (isServer) {
+        if (serverQueries) {
+          this.state = serverQueries
+        } else {
+          warning(
+            false,
+            "[React Match Breakpoints] It seems that you try to use RMB on server environment but you didn't provide server breakpoints"
+          )
+        }
       } else {
         const matchMediaBreakpoints = this.buildMatchMediaBreakpoints(queries)
         this.state = this.buildBooleanBreakpoints(matchMediaBreakpoints)

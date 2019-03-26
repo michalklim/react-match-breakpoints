@@ -49,7 +49,7 @@ describe('@withBreakpoints', () => {
   })
 
   it('should pass breakpoints state down to wrapped component', () => {
-    const breakpoints = createBreakpoints(mediaQueries)
+    const breakpoints = createBreakpoints(mediaQueries, null, stateMediaBreakpoints)
     const Component = generateDummyComponent()
     const WrappedComponent = withBreakpoints(Component)
     const wrapper = mount(
