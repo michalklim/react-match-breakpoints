@@ -2,11 +2,13 @@
 import get from 'lodash/get'
 import warning from 'warning'
 
-import { capitalize, isObject } from '../utils'
+import { capitalize, isObject, isServer } from '../utils'
 import withBreakpoints from '../withBreakpoints'
 
 class BreakpointsStore {
-  generateComponents(components, renameFn, parentPath, parentObj) {
+  generateComponents(config, renameFn, parentPath, parentObj, serverConfig) {
+    const components = isServer && serverConfig ? serverConfig : config
+
     return Object.keys(components).forEach(componentKey => {
       const rename = item => (renameFn ? renameFn(item) : capitalize(item))
       const componentName = rename(componentKey)
@@ -25,10 +27,13 @@ class BreakpointsStore {
           ? `${parentPath.join('.')}.${componentKey}`
           : componentKey
 
-        const Component = withBreakpoints(
-          ({ children, breakpoints }) =>
-            breakpoints && get(breakpoints, breakpointsPath) ? children : null
-        )
+        const Component = withBreakpoints(({ children, breakpoints }) => {
+          if (typeof componentValue === 'boolean') {
+            return componentValue ? children : null
+          } else {
+            return breakpoints && get(breakpoints, breakpointsPath) ? children : null
+          }
+        })
 
         Component.displayName = parentPath.length
           ? `Breakpoints.${parentPath.map(rename).join('.')}.${componentName}`
@@ -39,8 +44,8 @@ class BreakpointsStore {
     }, {})
   }
 
-  buildBreakpointsComponents(config, componentRenameFn) {
-    this.generateComponents(config, componentRenameFn, [], this)
+  buildBreakpointsComponents(config, componentRenameFn, serverConfig) {
+    this.generateComponents(config, componentRenameFn, [], this, serverConfig)
   }
 }
 

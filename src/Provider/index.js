@@ -3,17 +3,28 @@ import warning from 'warning'
 import set from 'lodash/set'
 
 import Context from '../Context'
-import isObject from '../utils/isObject'
+import { isObject, isServer } from '../utils/'
 
 class Provider extends Component {
   state = {}
   constructor(props) {
     super(props)
-    const { breakpoints: { queries } } = props
+    const { breakpoints: { queries, serverQueries } } = props
 
     if (queries) {
-      const matchMediaBreakpoints = this.buildMatchMediaBreakpoints(queries)
-      this.state = this.buildBooleanBreakpoints(matchMediaBreakpoints)
+      if (isServer && serverQueries) {
+        this.state = serverQueries
+      } else {
+        if (isServer && !serverQueries) {
+          warning(
+            false,
+            "[React Match Breakpoints] It seems that you try to use RMB on server environment but you didn't provide server breakpoints"
+          )
+        }
+
+        const matchMediaBreakpoints = this.buildMatchMediaBreakpoints(queries)
+        this.state = this.buildBooleanBreakpoints(matchMediaBreakpoints)
+      }
     } else if (process.env.NODE_ENV !== 'production') {
       warning(
         false,

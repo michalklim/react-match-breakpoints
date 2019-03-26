@@ -10,6 +10,15 @@ const mediaQueries = {
   isDesktop: 'screen and (min-width: 1201px)',
 }
 
+const serverMediaQueries = {
+  isMobile: {
+    small: true,
+    big: false,
+  },
+  isTablet: false,
+  isDesktop: false,
+}
+
 let Breakpoints
 let createBreakpoints
 let Provider
@@ -112,5 +121,22 @@ describe('<Breakpoints />', () => {
     expect(wrapper.contains(OnlyVisibleOnTablet)).toBeTruthy()
 
     wrapper.unmount()
+  })
+
+  it('renders server breakpoints when provided', () => {
+    const OnlyVisibleOnServerSmallMobile = () => <div>mobile</div>
+    const breakpoints = createBreakpoints(mediaQueries, null, serverMediaQueries)
+
+    const wrapper = mount(
+      <Provider breakpoints={breakpoints}>
+        <Fragment>
+          <Breakpoints.IsMobile.Small>
+            <OnlyVisibleOnServerSmallMobile />
+          </Breakpoints.IsMobile.Small>
+        </Fragment>
+      </Provider>
+    )
+
+    expect(wrapper.contains(OnlyVisibleOnServerSmallMobile)).toBeTruthy()
   })
 })
