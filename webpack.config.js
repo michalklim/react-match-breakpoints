@@ -17,8 +17,10 @@ module.exports = env => ({
     react: reactExternal,
   },
   mode: env.production ? 'production' : 'development',
-  devtool: env.production ? 'source-maps' : 'eval',
+  devtool: 'source-maps',
+  target: 'node',
   entry: path.resolve('./src/index.js'),
+
   output: {
     path: path.resolve('./dist'),
     filename: libraryName + (env.production ? '.min' : '') + '.js',
