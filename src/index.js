@@ -4,6 +4,6 @@ import { proxiedBreakpointsStoreInstance, breakpointsStoreInstance } from './Bre
 import createBreakpoints from './createBreakpoints'
 import Context from './Context'
 
-const Breakpoints = (window.Proxy && proxiedBreakpointsStoreInstance) || breakpointsStoreInstance
+const Breakpoints = (global.Proxy && proxiedBreakpointsStoreInstance) || breakpointsStoreInstance
 
 export { Provider, withBreakpoints, Breakpoints, createBreakpoints, Context }
