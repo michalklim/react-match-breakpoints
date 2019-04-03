@@ -1,6 +1,6 @@
 {
   "name": "react-match-breakpoints",
-  "version": "2.0.0-1",
+  "version": "2.0.0-2",
   "description": "Lightweight and easy to use media query library for React 📱💻🖥️",
   "main": "dist/react-match-breakpoints.js",
   "repository": {
