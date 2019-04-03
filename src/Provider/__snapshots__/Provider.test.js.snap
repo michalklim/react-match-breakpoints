@@ -2,7 +2,16 @@
 
 exports[`<Provider /> matches the snapshot 1`] = `
 <ContextProvider
-  value={Object {}}
+  value={
+    Object {
+      "isDesktop": Object {
+        "big": false,
+        "regular": false,
+      },
+      "isMobile": false,
+      "isTablet": false,
+    }
+  }
 >
   <div />
 </ContextProvider>

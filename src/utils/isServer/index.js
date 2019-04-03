@@ -1,3 +1,3 @@
-const isServer = () => Object.prototype.toString.call(global.process) === '[object process]'
+const isServer = typeof window !== 'object'
 
 export default isServer

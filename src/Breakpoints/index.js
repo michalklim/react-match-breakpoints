@@ -1,15 +1,17 @@
 /* global process */
 import get from 'lodash/get'
 import warning from 'warning'
+import isObject from 'lodash/isObject'
+import isFunction from 'lodash/isFunction'
 
-import { capitalize, isObject, isServer } from '../utils'
+import { capitalize, isServer } from '../utils'
 import withBreakpoints from '../withBreakpoints'
 
 class BreakpointsStore {
   generateComponents(config, renameFn, parentPath, parentObj, serverConfig) {
     const components = isServer && serverConfig ? serverConfig : config
 
-    return Object.keys(components).forEach(componentKey => {
+    return Object.keys(config).forEach(componentKey => {
       const rename = item => (renameFn ? renameFn(item) : capitalize(item))
       const componentName = rename(componentKey)
       const componentValue = components[componentKey]
@@ -20,13 +22,13 @@ class BreakpointsStore {
           componentValue,
           renameFn,
           [...parentPath, componentKey],
-          parentObj[componentName]
+          parentObj[componentName],
+          serverConfig
         )
       } else {
         const breakpointsPath = parentPath.length
           ? `${parentPath.join('.')}.${componentKey}`
           : componentKey
-
         const Component = withBreakpoints(({ children, breakpoints }) => {
           if (typeof componentValue === 'boolean') {
             return componentValue ? children : null
@@ -49,12 +51,13 @@ class BreakpointsStore {
   }
 }
 
-export const breakpointsStoreInstance = new BreakpointsStore()
-export const proxiedBreakpointsStoreInstance = new Proxy(breakpointsStoreInstance, {
-  get: (target, propKey) => {
-    const shouldNotShowWarning =
-      propKey in target || propKey === '__esModule' || process.env.NODE_ENV === 'production'
+const getHandler = (target, propKey) => {
+  const component = target[propKey]
 
+  const shouldNotShowWarning =
+    component || propKey === '__esModule' || process.env.NODE_ENV === 'production'
+
+  if (!shouldNotShowWarning) {
     warning(
       shouldNotShowWarning,
       '[React Match Breakpoints] You are trying to use component(' +
@@ -65,6 +68,19 @@ export const proxiedBreakpointsStoreInstance = new Proxy(breakpointsStoreInstanc
         Object.keys(target).join(', ')
     )
 
-    return shouldNotShowWarning ? target[propKey] : () => null
-  },
+    return null
+  }
+
+  if (isObject(component) && !isFunction(component)) {
+    return new Proxy(component, {
+      get: getHandler,
+    })
+  }
+
+  return shouldNotShowWarning ? Reflect.get(target, propKey) : () => null
+}
+
+export const breakpointsStoreInstance = new BreakpointsStore()
+export const proxiedBreakpointsStoreInstance = new Proxy(breakpointsStoreInstance, {
+  get: getHandler,
 })

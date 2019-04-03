@@ -122,21 +122,4 @@ describe('<Breakpoints />', () => {
 
     wrapper.unmount()
   })
-
-  it('renders server breakpoints when provided', () => {
-    const OnlyVisibleOnServerSmallMobile = () => <div>mobile</div>
-    const breakpoints = createBreakpoints(mediaQueries, null, serverMediaQueries)
-
-    const wrapper = mount(
-      <Provider breakpoints={breakpoints}>
-        <Fragment>
-          <Breakpoints.IsMobile.Small>
-            <OnlyVisibleOnServerSmallMobile />
-          </Breakpoints.IsMobile.Small>
-        </Fragment>
-      </Provider>
-    )
-
-    expect(wrapper.contains(OnlyVisibleOnServerSmallMobile)).toBeTruthy()
-  })
 })
