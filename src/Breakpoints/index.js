@@ -1,11 +1,11 @@
 /* global process */
-import get from 'lodash/get'
+import React from 'react'
 import warning from 'warning'
 import isObject from 'lodash/isObject'
 import isFunction from 'lodash/isFunction'
 
+import Breakpoint from '../Breakpoint'
 import { capitalize, isServer } from '../utils'
-import withBreakpoints from '../withBreakpoints'
 
 class BreakpointsStore {
   generateComponents(config, renameFn, parentPath, parentObj, serverConfig) {
@@ -29,19 +29,16 @@ class BreakpointsStore {
         const breakpointsPath = parentPath.length
           ? `${parentPath.join('.')}.${componentKey}`
           : componentKey
-        const Component = withBreakpoints(({ children, breakpoints }) => {
-          if (typeof componentValue === 'boolean') {
-            return componentValue ? children : null
-          } else {
-            return breakpoints && get(breakpoints, breakpointsPath) ? children : null
-          }
-        })
 
-        Component.displayName = parentPath.length
+        const BreakpointComponent = props => (
+          <Breakpoint serverConfig={serverConfig} breakpointsPath={breakpointsPath} {...props} />
+        )
+
+        BreakpointComponent.displayName = parentPath.length
           ? `Breakpoints.${parentPath.map(rename).join('.')}.${componentName}`
           : `Breakpoints.${componentName}`
 
-        parentObj[componentName] = Component
+        parentObj[componentName] = BreakpointComponent
       }
     }, {})
   }
