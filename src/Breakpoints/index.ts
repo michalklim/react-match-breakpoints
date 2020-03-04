@@ -62,7 +62,7 @@ const getHandler = (target, propKey) => {
         '). ' +
         "That name doesn't match any breakpoint you have provided. " +
         'Current breakpoints components names are: ' +
-        Object.keys(target).join(', ')
+        Object.keys(target).join(', '),
     )
 
     return null

@@ -1,9 +1,7 @@
-/* global require, module*/
 const webpack = require('webpack')
-const path = require('path')
-const pkg = require('./package.json')
-
-let libraryName = pkg.name
+const webpackMerge = require('webpack-merge')
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+const modeConfig = mode => require(`./webpack.${mode}.js`)(mode)
 
 const reactExternal = {
   root: 'React',
@@ -49,3 +47,36 @@ module.exports = env => ({
     extensions: ['.json', '.js'],
   },
 })
+module.exports = ({ mode } = { mode: 'development' }) => {
+  return webpackMerge(
+    {
+      mode,
+      plugins: [new webpack.ProgressPlugin()],
+      module: {
+        rules: [
+          {
+            enforce: 'pre',
+            test: /\.(ts|tsx)$/,
+            exclude: /node_modules/,
+            loader: 'eslint-loader',
+          },
+          {
+            test: /\.(ts|tsx)$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                cacheDirectory: true,
+              },
+            },
+          },
+        ],
+      },
+      resolve: {
+        plugins: [new TsconfigPathsPlugin()],
+        extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'],
+      },
+    },
+    modeConfig(mode),
+  )
+}
