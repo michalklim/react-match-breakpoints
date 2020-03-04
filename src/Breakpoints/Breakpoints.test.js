@@ -26,7 +26,7 @@ let Provider
 beforeEach(() => {
   jest.resetModules()
 
-  Breakpoints = require('../Breakpoints').proxiedBreakpointsStoreInstance
+  Breakpoints = require('./index').proxiedBreakpointsStoreInstance
   createBreakpoints = require('../createBreakpoints')
   Provider = require('../Provider')
 })
@@ -47,7 +47,7 @@ describe('<Breakpoints />', () => {
           <Breakpoints.IsTablet />
           <Breakpoints.IsDesktop />
         </div>
-      </Provider>
+      </Provider>,
     )
 
     wrapper.unmount()
@@ -63,14 +63,14 @@ describe('<Breakpoints />', () => {
         <div>
           <Breakpoints.IsBigDesktop />
         </div>
-      </Provider>
+      </Provider>,
     )
 
     expect(errorSpy.mock.calls[0][0]).toMatch(
       '[React Match Breakpoints] You are trying to use component(IsBigDesktop). ' +
         "That name doesn't match any breakpoint you have provided. " +
         'Current breakpoints components names are: ' +
-        'IsMobile, IsTablet, IsDesktop'
+        'IsMobile, IsTablet, IsDesktop',
     )
   })
 
@@ -90,7 +90,7 @@ describe('<Breakpoints />', () => {
             <OnlyVisibleOnTablet />
           </Breakpoints.IsTablet>
         </Fragment>
-      </Provider>
+      </Provider>,
     )
 
     expect(wrapper.contains(OnlyVisibleOnBigMobile)).not.toBeTruthy()

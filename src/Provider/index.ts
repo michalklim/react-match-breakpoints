@@ -9,7 +9,9 @@ class Provider extends Component {
   state = {}
   constructor(props) {
     super(props)
-    const { breakpoints: { queries, serverQueries } } = props
+    const {
+      breakpoints: { queries, serverQueries },
+    } = props
 
     if (queries) {
       if (isServer) {
@@ -18,7 +20,7 @@ class Provider extends Component {
         } else {
           warning(
             false,
-            "[React Match Breakpoints] It seems that you try to use RMB on server environment but you didn't provide server breakpoints"
+            "[React Match Breakpoints] It seems that you try to use RMB on server environment but you didn't provide server breakpoints",
           )
         }
       } else {
@@ -28,7 +30,7 @@ class Provider extends Component {
     } else if (process.env.NODE_ENV !== 'production') {
       warning(
         false,
-        "[React Match Breakpoints] It seems that you didn't provide valid breakpoints object to the provider"
+        "[React Match Breakpoints] It seems that you didn't provide valid breakpoints object to the provider",
       )
     }
   }
@@ -81,9 +83,7 @@ class Provider extends Component {
   }
 
   render() {
-    return (
-      <Context.Provider value={this.state}>{Children.only(this.props.children)}</Context.Provider>
-    )
+    return <Context.Provider value={this.state}>{Children.only(this.props.children)}</Context.Provider>
   }
 }
 
