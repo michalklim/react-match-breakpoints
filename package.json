@@ -41,6 +41,7 @@
     "@babel/core": "7.9.0",
     "@babel/plugin-proposal-class-properties": "7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "7.9.0",
+    "@babel/plugin-transform-modules-commonjs": "7.9.0",
     "@babel/preset-env": "7.9.0",
     "@babel/preset-react": "7.9.0",
     "@babel/preset-typescript": "7.9.0",
@@ -48,12 +49,14 @@
     "@commitlint/config-conventional": "8.3.4",
     "@storybook/react": "5.3.17",
     "@types/classnames": "2.2.10",
+    "@types/jest": "25.1.4",
     "@types/lodash": "4.14.149",
     "@types/react": "16.9.25",
     "@types/react-dom": "16.9.5",
     "@types/storybook__react": "5.2.1",
     "@typescript-eslint/eslint-plugin": "2.24.0",
     "@typescript-eslint/parser": "2.24.0",
+    "babel-jest": "25.1.0",
     "babel-loader": "8.1.0",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.10.0",
@@ -62,6 +65,8 @@
     "fork-ts-checker-webpack-plugin": "4.1.0",
     "html-webpack-plugin": "3.2.0",
     "husky": "4.2.3",
+    "jest": "25.1.0",
+    "matchmedia-polyfill": "0.3.2",
     "np": "6.2.0",
     "prettier": "1.19.1",
     "pretty-quick": "2.0.1",
@@ -83,20 +88,5 @@
       "pre-commit": "pretty-quick --staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
-  },
-  "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>src/setupTests.js",
-    "collectCoverageFrom": [
-      "<rootDir>/src/**/*.{js,jsx,mjs}"
-    ],
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/src/index.js",
-      "<rootDir>/src/utils/index.js",
-      "<rootDir>/src/setupTests.js"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
-      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
-    ]
   }
 }
