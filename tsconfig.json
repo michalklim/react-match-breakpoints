@@ -21,5 +21,5 @@
       "react-match-breakpoints": ["src"]
     }
   },
-  "include": ["src", "examples"]
+  "include": ["src", "stories"]
 }

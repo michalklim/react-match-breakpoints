@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const webpackMerge = require('webpack-merge')
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 const modeConfig = mode => require(`./webpack.${mode}.js`)(mode)
+const typescriptConfig = require('./webpack.typescript-base')
 
 const reactExternal = {
   root: 'React',
@@ -60,23 +60,10 @@ module.exports = ({ mode } = { mode: 'development' }) => {
             exclude: /node_modules/,
             loader: 'eslint-loader',
           },
-          {
-            test: /\.(ts|tsx)$/,
-            exclude: /node_modules/,
-            use: {
-              loader: 'babel-loader',
-              options: {
-                cacheDirectory: true,
-              },
-            },
-          },
         ],
       },
-      resolve: {
-        plugins: [new TsconfigPathsPlugin()],
-        extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'],
-      },
     },
+    typescriptConfig,
     modeConfig(mode),
   )
 }
