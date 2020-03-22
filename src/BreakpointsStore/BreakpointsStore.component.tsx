@@ -1,16 +1,18 @@
-import React, { Fragment, FunctionComponent, useContext } from 'react'
+import React, { Fragment, FunctionComponent } from 'react'
 import set from 'lodash/set'
 import get from 'lodash/get'
 
 import { Context } from '../Context'
 
-class BreakpointsStore {
+export class BreakpointsStore {
   public buildBreakpointComponents(normalizedMediaQueryDict: NormalizedMediaQueryDict) {
     Object.keys(normalizedMediaQueryDict).forEach(key => {
       const Breakpoint: FunctionComponent = ({ children }) => {
-        const breakpoints = useContext<BreakpointsState>(Context)
-
-        return breakpoints && get(breakpoints, key) ? children : <Fragment />
+        return (
+          <Context.Consumer>
+            {breakpoints => (breakpoints && get(breakpoints, key) ? children : <Fragment />)}
+          </Context.Consumer>
+        )
       }
 
       Breakpoint.displayName = `Breakpoint.${key}`
