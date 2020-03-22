@@ -1,0 +1,20 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks'
+import Breakpoint, { initMatchBreakpoints } from 'react-match-breakpoints'
+
+<Meta title="Introduction" />
+
+## Motivation
+
+React Match Breakpoints **(RMB)** goal is to provide a consistent way of handling responsiveness in your application.
+Though similar in some ways to other solutions like [react-responsive](https://github.com/contra/react-responsive) or [react-media](https://github.com/ReactTraining/react-media)
+RMB differs in core concepts:
+
+- You should be able to use RMB with ease in any given form (as component, hoc or hook).
+  Regardless of how you will be using RMB, your breakpoints configuration should be single source of thruth.
+
+- RMB should make no assumptions regarding how you media queries should look like.
+  RMB is built on top of [matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) API so you can pass any media query
+  string. This approach gives you a lot of flexibility and works great with CSS-in-JS solutions since
+  you can declare your media queries once and use them both in your styles and layout.
+
+<Preview>test</Preview>
