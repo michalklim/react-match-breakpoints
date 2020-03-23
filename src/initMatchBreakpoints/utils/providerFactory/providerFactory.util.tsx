@@ -1,9 +1,9 @@
-import React, { FunctionComponent, ReactNode, useEffect, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 
 import { generateInitialState } from '../generateInitialState'
-import { Context } from '../../../Context'
+import { BreakpointsContext } from '../../../BreakpointsContext'
 
-type ProviderFactory = (normalizedMediaQueryDict: NormalizedMediaQueryDict) => ReactNode
+type ProviderFactory = (normalizedMediaQueryDict: NormalizedMediaQueryDict) => FunctionComponent
 
 export const providerFactory: ProviderFactory = normalizedMediaQueryDict => {
   const initialState = generateInitialState(normalizedMediaQueryDict)
@@ -24,7 +24,7 @@ export const providerFactory: ProviderFactory = normalizedMediaQueryDict => {
       })
     }, [])
 
-    return <Context.Provider value={state}>{children}</Context.Provider>
+    return <BreakpointsContext.Provider value={state}>{children}</BreakpointsContext.Provider>
   }
 
   return Provider
