@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 
-import { generateInitialState } from '../generateInitialState'
-import { BreakpointsContext } from '../../../BreakpointsContext'
+import { BreakpointsContext, generateInitialState } from '../../../BreakpointsContext'
 
 type ProviderFactory = (normalizedMediaQueryDict: NormalizedMediaQueryDict) => FunctionComponent
 
