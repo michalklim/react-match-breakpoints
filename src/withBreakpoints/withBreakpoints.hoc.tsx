@@ -1,4 +1,4 @@
-import React, { Component, ComponentType, FunctionComponent } from 'react'
+import React, { ComponentType, FunctionComponent } from 'react'
 import { Subtract } from 'utility-types'
 
 import { BreakpointsContext, denormalizeBreakpointsState } from '../BreakpointsContext'
