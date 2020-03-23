@@ -11,7 +11,7 @@ interface NormalizedMediaQueryDict {
 }
 
 interface InjectedBreakpointsProps<T = BreakpointsState> {
-  breakpoints: T
+  breakpoints: DenormalizedBreakpointsState<T>
 }
 
 type DeepOverrideValues<T, P, V> = {

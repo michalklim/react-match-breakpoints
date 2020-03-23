@@ -1,7 +1,9 @@
 import { useContext } from 'react'
 
-import { BreakpointsContext } from '../BreakpointsContext'
+import { BreakpointsContext, denormalizeBreakpointsState } from '../BreakpointsContext'
 
 export const useBreakpoints = () => {
-  return useContext<BreakpointsState>(BreakpointsContext)
+  const state = useContext<BreakpointsState>(BreakpointsContext)
+
+  return denormalizeBreakpointsState(state)
 }
