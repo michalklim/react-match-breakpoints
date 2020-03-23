@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
-import { Context } from '../Context'
+import { BreakpointsContext } from '../BreakpointsContext'
 
 export const useBreakpoints = () => {
-  return useContext<BreakpointsState>(Context)
+  return useContext<BreakpointsState>(BreakpointsContext)
 }

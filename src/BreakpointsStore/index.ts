@@ -1,1 +1,2 @@
-export { breakpointsStoreInstance, proxiedBreakpointsStoreInstance } from './BreakpointsStore.component'
+export { breakpointsStoreInstance } from './BreakpointsStore.component'
+export { proxifyBreakpointsStore } from './utils/proxifyBreakpointsStore'

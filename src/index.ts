@@ -1,8 +1,27 @@
-import { proxiedBreakpointsStoreInstance, breakpointsStoreInstance } from './BreakpointsStore'
+import { ComponentType } from 'react'
+import { proxifyBreakpointsStore, breakpointsStoreInstance } from './BreakpointsStore'
+import { withBreakpoints } from './withBreakpoints'
+import { BreakpointsContext } from './BreakpointsContext'
+import { initMatchBreakpoints } from './initMatchBreakpoints'
 
-const Breakpoint = (window.Proxy && proxiedBreakpointsStoreInstance) || breakpointsStoreInstance
+const Breakpoint = (window.Proxy && proxifyBreakpointsStore(breakpointsStoreInstance)) || breakpointsStoreInstance
 
 export default Breakpoint
 export { initMatchBreakpoints } from './initMatchBreakpoints'
-export { Context } from './Context'
+export { BreakpointsContext } from './BreakpointsContext'
 export { useBreakpoints } from './useBreakpoints'
+export { withBreakpoints } from './withBreakpoints'
+
+export interface WithBreakpointsProps<T extends MediaQueryDict> {
+  breakpoints: DenormalizedBreakpointsState<T>
+}
+
+export interface TypedBreakpoints<T extends MediaQueryDict> {
+  default: Breakpoint<T>
+  initMatchBreakpoints: (mediaQueriesDict: T) => ReturnType<typeof initMatchBreakpoints>
+  BreakpointsContext: typeof BreakpointsContext
+  useBreakpoints: () => DenormalizedBreakpointsState<T>
+  withBreakpoints: <P extends InjectedBreakpointsProps<DenormalizedBreakpointsState<T>>>(
+    Component: ComponentType<P>,
+  ) => ReturnType<typeof withBreakpoints>
+}
