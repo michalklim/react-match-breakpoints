@@ -28,7 +28,10 @@
     "format": "npm run prettier -- --write '{,!(dist|examples)/**/}*.js'",
     "check-types": "tsc",
     "release": "np",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "deploy-storybook": "storybook-to-ghpages --out=.out",
+    "prepublishOnly": "rimraf ./dist && npm run build",
+    "postpublish": "npm run build-storybook && npm run deploy-storybook"
   },
   "author": "Michal Klim <michal.wklim@gmail.com>",
   "license": "MIT",
