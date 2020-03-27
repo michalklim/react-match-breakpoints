@@ -3,6 +3,6 @@ const productionConfig = require('./webpack.production')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = () =>
-  webpackMerge(productionConfig, {
+  webpackMerge(productionConfig(), {
     plugins: [new BundleAnalyzerPlugin()],
   })
