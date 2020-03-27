@@ -1,6 +1,6 @@
 import React, { Fragment, FunctionComponent } from 'react'
-import set from 'lodash/set'
-import get from 'lodash/get'
+import set from 'lodash-es/set'
+import get from 'lodash-es/get'
 
 import { BreakpointsContext } from '../BreakpointsContext'
 

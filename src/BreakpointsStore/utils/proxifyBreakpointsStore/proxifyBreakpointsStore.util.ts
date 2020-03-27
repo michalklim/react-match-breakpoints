@@ -1,4 +1,4 @@
-import get from 'lodash/get'
+import get from 'lodash-es/get'
 
 export const proxifyBreakpointsStore = <T extends object>(obj: T) =>
   new Proxy(obj, {
