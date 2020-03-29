@@ -1,4 +1,4 @@
-import get from 'lodash-es/get'
+import { get } from '../../../utils/get'
 
 export const proxifyBreakpointsStore = <T extends object>(obj: T) =>
   new Proxy(obj, {
@@ -14,6 +14,6 @@ export const proxifyBreakpointsStore = <T extends object>(obj: T) =>
         )
       }
 
-      return !isMissingComponent ? get(target, propKey) : () => null
+      return !isMissingComponent ? get(target, `${String(propKey)}`) : () => null
     },
   })
