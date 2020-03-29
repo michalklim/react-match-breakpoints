@@ -1,4 +1,4 @@
-import isPlainObject from 'lodash-es/isPlainObject'
+import { isPlainObject } from '../../../utils/isPlainObject'
 
 type NormalizeMediaQueryDictUtil = (mediaQueriesDict: MediaQueryDict) => NormalizedMediaQueryDict
 type NormalizeRecursively = (mediaQueriesDict: MediaQueryDict, parentKeys?: string[]) => NormalizedMediaQueryDict

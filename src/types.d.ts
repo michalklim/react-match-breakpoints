@@ -25,3 +25,5 @@ type DenormalizedBreakpointsState<T> = import('utility-types').DeepNonNullable<
 type Breakpoint<T> = import('utility-types').DeepNonNullable<
   DeepOverrideValues<T, MediaQueryDict, import('react').FunctionComponent>
 >
+
+type PlainObject = Record<string | number | symbol>
