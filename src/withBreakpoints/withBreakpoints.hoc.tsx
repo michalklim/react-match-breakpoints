@@ -1,15 +1,14 @@
-import React, { ComponentType, FunctionComponent } from 'react'
+import React, { ComponentType, FunctionComponent, useContext, useMemo } from 'react'
 import { Subtract } from 'utility-types'
 
 import { BreakpointsContext, denormalizeBreakpointsState } from '../BreakpointsContext'
 
 export const withBreakpoints = <P extends InjectedBreakpointsProps>(Component: ComponentType<P>) => {
   const EnhancedComponent: FunctionComponent<Subtract<P, InjectedBreakpointsProps>> = props => {
-    return (
-      <BreakpointsContext.Consumer>
-        {breakpoints => <Component {...(props as P)} breakpoints={denormalizeBreakpointsState(breakpoints)} />}
-      </BreakpointsContext.Consumer>
-    )
+    const state = useContext(BreakpointsContext)
+    const denormalizedBreakpointsState = useMemo(() => denormalizeBreakpointsState(state), [state])
+
+    return <Component {...(props as P)} breakpoints={denormalizedBreakpointsState} />
   }
 
   const getDisplayName = (WrappedComponent: ComponentType<P>) =>
