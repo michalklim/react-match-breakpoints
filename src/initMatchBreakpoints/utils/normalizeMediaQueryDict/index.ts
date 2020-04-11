@@ -1,1 +1,1 @@
-export { normalizeMediaQueryDict } from './normalizeMediaQueryDict.util'
+export { normalizeBreakpointsConfig } from './normalizeMediaQueryDict.util'

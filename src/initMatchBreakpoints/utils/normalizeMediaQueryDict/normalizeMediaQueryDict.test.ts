@@ -1,4 +1,4 @@
-import { normalizeMediaQueryDict } from './normalizeMediaQueryDict.util'
+import { normalizeBreakpointsConfig } from './normalizeMediaQueryDict.util'
 
 const MATCH_MEDIA_QUERY = 'only screen and (max-width: 480px)'
 const MATCH_MEDIA_MOCK = {
@@ -31,7 +31,7 @@ describe('normalizeMediaQueryDict', () => {
       tablet: MATCH_MEDIA_MOCK,
     }
 
-    const result = normalizeMediaQueryDict(TEST_OBJ)
+    const result = normalizeBreakpointsConfig(TEST_OBJ)
 
     expect(result).toMatchObject(EXPECTED_RESULT)
   })
@@ -53,7 +53,7 @@ describe('normalizeMediaQueryDict', () => {
       ['special.apple.iphone']: MATCH_MEDIA_MOCK,
     }
 
-    const result = normalizeMediaQueryDict(TEST_OBJ)
+    const result = normalizeBreakpointsConfig(TEST_OBJ)
 
     expect(result).toMatchObject(EXPECTED_RESULT)
   })

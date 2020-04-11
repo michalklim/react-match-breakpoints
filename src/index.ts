@@ -1,10 +1,9 @@
-import { ComponentType } from 'react'
 import { proxifyBreakpointsStore, breakpointsStoreInstance } from './BreakpointsStore'
-import { withBreakpoints } from './withBreakpoints'
-import { BreakpointsContext } from './BreakpointsContext'
-import { initMatchBreakpoints } from './initMatchBreakpoints'
+// import { withBreakpoints } from './withBreakpoints'
+// import { BreakpointsContext } from './BreakpointsContext'
+// import { initMatchBreakpoints } from './initMatchBreakpoints'
 
-const Breakpoint = (window.Proxy && proxifyBreakpointsStore(breakpointsStoreInstance)) || breakpointsStoreInstance
+const Breakpoint = (Proxy && proxifyBreakpointsStore(breakpointsStoreInstance)) || breakpointsStoreInstance
 
 export default Breakpoint
 export { initMatchBreakpoints } from './initMatchBreakpoints'
@@ -12,16 +11,16 @@ export { BreakpointsContext } from './BreakpointsContext'
 export { useBreakpoints } from './useBreakpoints'
 export { withBreakpoints } from './withBreakpoints'
 
-export interface WithBreakpointsProps<T extends MediaQueryDict> {
-  breakpoints: DenormalizedBreakpointsState<T>
-}
+// export interface WithBreakpointsProps<T extends RmbConfig<string> | RmbConfig<boolean>> {
+//   breakpoints: DenormalizedBreakpointsState<T>
+// }
 
-export interface TypedBreakpoints<T extends MediaQueryDict> {
-  default: Breakpoint<T>
-  initMatchBreakpoints: (mediaQueriesDict: T) => ReturnType<typeof initMatchBreakpoints>
-  BreakpointsContext: typeof BreakpointsContext
-  useBreakpoints: () => DenormalizedBreakpointsState<T>
-  withBreakpoints: <P extends InjectedBreakpointsProps<DenormalizedBreakpointsState<T>>>(
-    Component: ComponentType<P>,
-  ) => ReturnType<typeof withBreakpoints>
-}
+// export interface TypedBreakpoints<T extends MediaQueryDict> {
+//   default: Breakpoint<T>
+//   initMatchBreakpoints: (mediaQueriesDict: T) => ReturnType<typeof initMatchBreakpoints>
+//   BreakpointsContext: typeof BreakpointsContext
+//   useBreakpoints: () => DenormalizedBreakpointsState<T>
+//   withBreakpoints: <P extends InjectedBreakpointsProps<DenormalizedBreakpointsState<T>>>(
+//     Component: ComponentType<P>,
+//   ) => ReturnType<typeof withBreakpoints>
+// }

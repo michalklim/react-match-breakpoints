@@ -2,24 +2,34 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 
 import { BreakpointsContext, generateInitialState } from '../../../BreakpointsContext'
 
-type ProviderFactory = (normalizedMediaQueryDict: NormalizedMediaQueryDict) => FunctionComponent
+type ProviderFactory = (
+  clientNormalizedBreakpointsConfig: RmbNormalizedBreakpointsConfig<string>,
+  options?: RmbParsedOptions,
+) => FunctionComponent
 
-export const providerFactory: ProviderFactory = normalizedMediaQueryDict => {
-  const initialState = generateInitialState(normalizedMediaQueryDict)
+export const providerFactory: ProviderFactory = (clientNormalizedBreakpointsConfig, options) => {
+  const initialState = generateInitialState(clientNormalizedBreakpointsConfig, options)
 
   const Provider: FunctionComponent = ({ children }) => {
     const [state, setState] = useState(initialState)
 
     useEffect(() => {
-      Object.entries(normalizedMediaQueryDict).forEach(([key, value]) => {
-        if (typeof value !== 'boolean') {
-          value.addListener(mq => {
-            setState(prevState => ({
-              ...prevState,
-              [key]: mq.matches,
-            }))
-          })
+      Object.entries(clientNormalizedBreakpointsConfig).forEach(([key, value]) => {
+        const matchMediaValue = matchMedia(value)
+
+        if (typeof options?.ssr !== 'undefined') {
+          setState(prevState => ({
+            ...prevState,
+            [key]: matchMediaValue.matches,
+          }))
         }
+
+        matchMediaValue.addListener(mq => {
+          setState(prevState => ({
+            ...prevState,
+            [key]: mq.matches,
+          }))
+        })
       })
     }, [])
 

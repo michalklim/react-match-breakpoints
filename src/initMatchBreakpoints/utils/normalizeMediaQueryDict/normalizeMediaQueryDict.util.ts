@@ -1,11 +1,18 @@
 import { isPlainObject } from '../../../utils/isPlainObject'
 
-type NormalizeMediaQueryDictUtil = (mediaQueriesDict: MediaQueryDict) => NormalizedMediaQueryDict
-type NormalizeRecursively = (mediaQueriesDict: MediaQueryDict, parentKeys?: string[]) => NormalizedMediaQueryDict
+type ReturnType<T extends boolean | string> = T extends string
+  ? RmbNormalizedBreakpointsConfig<string>
+  : T extends boolean
+  ? RmbNormalizedBreakpointsConfig<boolean>
+  : never
+//type NormalizeMediaQueryDictUtil = <T extends RmbBaseBreakpointsConfig<string> | RmbBaseBreakpointsConfig<boolean>>(breakpointsConfig: T) => ReturnType<T>
+// type NormalizeRecursively = <T extends RmbBaseBreakpointsConfig<string> | RmbBaseBreakpointsConfig<boolean>>(breakpointsConfigPart: T, parentKeys?: string[]) => ReturnType<T>
 
-export const normalizeMediaQueryDict: NormalizeMediaQueryDictUtil = mediaQueriesDict => {
-  const normalizeRecursively: NormalizeRecursively = (mediaQueriesDict, parentKeys = []) => {
-    return Object.entries(mediaQueriesDict).reduce((acc, [key, value]) => {
+export const normalizeBreakpointsConfig = <T extends boolean | string>(
+  breakpointsConfig: RmbConfig<T>,
+): ReturnType<T> => {
+  const normalizeRecursively = (breakpointsConfigPart: RmbConfig<T>, parentKeys: string[] = []): ReturnType<T> => {
+    return Object.entries(breakpointsConfigPart).reduce<ReturnType<T>>((acc, [key, value]) => {
       if (isPlainObject(value)) {
         return {
           ...acc,
@@ -13,30 +20,12 @@ export const normalizeMediaQueryDict: NormalizeMediaQueryDictUtil = mediaQueries
         }
       }
 
-      const parsedValue = (() => {
-        if (typeof value === 'string' && window?.matchMedia) {
-          return matchMedia(value)
-        }
-
-        if (typeof value === 'string' && !window?.matchMedia) {
-          throw new Error(
-            `[RMB]: matchMedia unavailable. Please make sure that your environment is supporting matchMedia api and you are running it in browser`,
-          )
-        }
-
-        if (typeof value === 'boolean') {
-          return value
-        }
-
-        throw new Error(`[RMB]: Media query value could be either string or boolean. Received ${typeof value}`)
-      })()
-
       return {
         ...acc,
-        [[...parentKeys, key].join('.')]: parsedValue,
+        [[...parentKeys, key].join('.')]: value,
       }
     }, {})
   }
 
-  return normalizeRecursively(mediaQueriesDict)
+  return normalizeRecursively(breakpointsConfig)
 }
