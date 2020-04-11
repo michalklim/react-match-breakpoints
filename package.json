@@ -2,7 +2,7 @@
   "name": "react-match-breakpoints",
   "version": "2.0.0-3",
   "description": "Lightweight and easy to use media query library for React 📱💻🖥️",
-  "main": "dist/react-match-breakpoints.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/michalklim/react-match-breakpoints.git"
@@ -27,7 +27,7 @@
     "prettier": "prettier",
     "format": "npm run prettier -- --write '{,!(dist|examples)/**/}*.js'",
     "check-types": "tsc",
-    "lint": "eslint . --ext .ts,.tsx",
+    "lint": "eslint src/** --ext .ts,.tsx",
     "release": "np",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages --out=.out",
@@ -68,6 +68,7 @@
     "eslint-config-prettier": "6.10.0",
     "eslint-loader": "3.0.3",
     "eslint-plugin-react": "7.19.0",
+    "eslint-plugin-react-hooks": "3.0.0",
     "fork-ts-checker-webpack-plugin": "4.1.0",
     "husky": "4.2.3",
     "jest": "25.1.0",
