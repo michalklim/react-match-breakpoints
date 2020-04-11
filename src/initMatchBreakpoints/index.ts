@@ -1,10 +1,13 @@
-import { normalizeMediaQueryDict } from './utils/normalizeMediaQueryDict'
+import { normalizeBreakpointsConfig } from './utils/normalizeMediaQueryDict'
 import { breakpointsStoreInstance } from '../BreakpointsStore'
 import { providerFactory } from './utils/providerFactory'
+import { parseOptions } from './utils/parseOptions'
 
-export function initMatchBreakpoints(mediaQueriesDict: MediaQueryDict) {
-  const normalizedMediaQueryDict = normalizeMediaQueryDict(mediaQueriesDict)
-  breakpointsStoreInstance.buildBreakpointComponents(normalizedMediaQueryDict)
+export function initMatchBreakpoints(breakpointsConfig: RmbConfig<string>, options?: RmbOptions) {
+  const clientNormalizedBreakpointsConfig = normalizeBreakpointsConfig<string>(breakpointsConfig)
+  const parsedOptions = parseOptions(options)
 
-  return providerFactory(normalizedMediaQueryDict)
+  breakpointsStoreInstance.buildBreakpointComponents(clientNormalizedBreakpointsConfig, parsedOptions)
+
+  return providerFactory(clientNormalizedBreakpointsConfig, parsedOptions)
 }

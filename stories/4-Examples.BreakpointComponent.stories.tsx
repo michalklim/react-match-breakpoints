@@ -6,6 +6,7 @@ export default {
 }
 
 const breakpointsConfig = {
+  mobile: 'screen and (min-width: 340px)',
   tablet: 'screen and (min-width: 768px)',
   desktop: {
     small: 'screen and (min-width: 1024px)',
@@ -20,15 +21,17 @@ export const BreakpointComponent = (): ReactNode => {
 
   return (
     <BreakpointsProvider>
+      <Breakpoint.mobile>
+        <div className="test">mobile</div>
+      </Breakpoint.mobile>
       <Breakpoint.tablet>
-        <div className="dupa dupa1">tablet</div>
-        <div className="dupa dupa1 dupa2">tablet</div>
+        <div className="test test1">tablet</div>
       </Breakpoint.tablet>
       <Breakpoint.desktop.small>
-        <div className="dupa dupa1">desktop small</div>
+        <div className="test test1">desktop small</div>
       </Breakpoint.desktop.small>
       <Breakpoint.desktop.big>
-        <div className="dupa dupa1">desktop big</div>
+        <div className="test test1">desktop big</div>
       </Breakpoint.desktop.big>
     </BreakpointsProvider>
   )

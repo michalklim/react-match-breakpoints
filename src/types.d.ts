@@ -1,29 +1,43 @@
-interface BreakpointsState {
+type PlainObject = Record<string | number | symbol, any>
+
+interface RmbBreakpointsState {
   [key: string]: boolean
 }
 
-interface MediaQueryDict {
-  [key: string]: boolean | string | MediaQueryDict
+interface RmbConfig<T extends boolean | string> {
+  [key: string]: T | BreakpointsConfig
 }
 
-interface NormalizedMediaQueryDict {
-  [key: string]: boolean | MediaQueryList
+interface RmbNormalizedBreakpointsConfig<T extends boolean | string> {
+  [key: string]: T
 }
 
-interface InjectedBreakpointsProps<T = BreakpointsState> {
-  breakpoints: DenormalizedBreakpointsState<T>
+interface RmbOptions {
+  debug?: boolean
+  ssr?: {
+    isServer: boolean
+    config: RmbConfig<boolean>
+    rehydrate?: boolean
+  }
 }
 
-type DeepOverrideValues<T, P, V> = {
-  [K in keyof T]?: T[K] extends P ? DeepOverrideValues<T[K]> : V
+interface RmbParsedOptions {
+  debug?: boolean
+  ssr?: {
+    isServer: boolean
+    config: RmbBreakpointsState
+    rehydrate?: boolean
+  }
 }
-
-type DenormalizedBreakpointsState<T> = import('utility-types').DeepNonNullable<
-  DeepOverrideValues<T, MediaQueryDict, boolean>
->
-
-type Breakpoint<T> = import('utility-types').DeepNonNullable<
-  DeepOverrideValues<T, MediaQueryDict, import('react').FunctionComponent>
->
-
-type PlainObject = Record<string | number | symbol>
+//
+// interface InjectedBreakpointsProps<T = RmbBreakpointsState> {
+//   breakpoints: RmbConfig<boolean>
+// }
+//
+// type DeepOverrideValues<T, P, V> = {
+//   [K in keyof T]?: T[K] extends P ? DeepOverrideValues<T[K]> : V
+// }
+//
+// type DenormalizedBreakpointsState<T> = import('utility-types').DeepNonNullable<
+//   DeepOverrideValues<T, MediaQueryDict, boolean>
+//   >

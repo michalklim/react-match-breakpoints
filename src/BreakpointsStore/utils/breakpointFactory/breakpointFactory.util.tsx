@@ -1,23 +1,38 @@
-import React, { Fragment, FunctionComponent, useContext } from 'react'
+import React, { Children, cloneElement, Fragment, FunctionComponent, useContext, useEffect, useState } from 'react'
 import { BreakpointsContext } from '../../../BreakpointsContext'
-import { get } from '../../../utils/get'
 
-type BreakpointFactoryUtil = (breakpointId: string) => FunctionComponent
+type BreakpointFactoryUtil = (breakpointId: string, options?: RmbParsedOptions) => FunctionComponent
 
-export const breakpointFactory: BreakpointFactoryUtil = breakpointId => {
+const PassThrough: FunctionComponent = ({ children }) => <Fragment>{children}</Fragment>
+
+export const breakpointFactory: BreakpointFactoryUtil = (breakpointId, options) => {
   const Breakpoint: FunctionComponent = ({ children }) => {
     const state = useContext(BreakpointsContext)
-    const breakpointState = get<boolean>(state, breakpointId)
+    const breakpointState = state[breakpointId]
+    const [keyState, setKeyState] = useState('guessed')
 
-    if (typeof children === 'function') {
-      return children(breakpointState)
-    }
+    useEffect(() => {
+      if (options?.ssr?.config && options?.ssr.rehydrate && breakpointState !== options.ssr.config[breakpointId]) {
+        setKeyState('guessed-wrong')
+      }
+    }, [breakpointState])
 
-    if (breakpointState) {
-      return children
-    }
-
-    return <Fragment />
+    return (
+      <PassThrough key={keyState}>
+        {breakpointState ? (
+          Children.map(children, child => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const className = (child as any)?.props?.className
+            const modifiedClassName = className ? `${className} rmb-${breakpointId}` : `rmb-${breakpointId}`
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const modifiedChildren = cloneElement(child as any, { className: modifiedClassName })
+            return modifiedChildren
+          })
+        ) : (
+          <Fragment />
+        )}
+      </PassThrough>
+    )
   }
 
   Breakpoint.displayName = `Breakpoint.${breakpointId}`
