@@ -1,10 +1,10 @@
 import { isPlainObject } from 'common/isPlainObject'
 
 export const normalizeBreakpointsConfig = <T extends boolean | string>(
-  breakpointsConfig: Rmb.Config<T>,
+  breakpointsConfig: Rmb.Config | Rmb.ServerConfig,
 ): Rmb.NormalizedConfig<T> => {
   const normalizeRecursively = (
-    breakpointsConfigPart: Rmb.Config<T>,
+    breakpointsConfigPart: typeof breakpointsConfig | object,
     parentKeys: string[] = [],
   ): Rmb.NormalizedConfig<T> => {
     return Object.entries(breakpointsConfigPart).reduce<Rmb.NormalizedConfig<T>>((acc, [key, value]) => {

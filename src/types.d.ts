@@ -1,8 +1,8 @@
 namespace Rmb {
   type PlainObject = Record<string | number | symbol, any>
 
-  interface Config<T extends boolean | string = boolean> {
-    [key: string]: T | Config<T>
+  interface Config {
+    [key: string]: string | Config
   }
 
   type NormalizedConfig<T extends boolean | string = boolean> = Record<string, T>
@@ -11,10 +11,12 @@ namespace Rmb {
     debug?: boolean
     ssr?: {
       isServer: boolean
-      config: Config
+      config: ServerConfig
       rehydrate?: boolean
     }
   }
+
+  type ServerConfig = DeepOverrideValues<Config, Config, boolean>
 
   interface ParsedOptions {
     debug?: boolean
@@ -29,11 +31,9 @@ namespace Rmb {
     [K in keyof T]?: T[K] extends P ? DeepOverrideValues<T[K], P, V> : V
   }
 
-  type Breakpoints<T = Config<string>, P = boolean> = import('utility-types').DeepNonNullable<
-    DeepOverrideValues<T, Config<string>, P>
-  >
+  type Breakpoints<T = Config, P = boolean> = import('utility-types').DeepNonNullable<DeepOverrideValues<T, Config, P>>
 
-  interface InjectedBreakpointsProps<T extends Config<string> = Config<string>> {
+  interface InjectedBreakpointsProps<T extends Config = Config> {
     breakpoints: Breakpoints<T>
   }
 }
