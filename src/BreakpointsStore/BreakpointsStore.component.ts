@@ -2,7 +2,7 @@ import { set } from 'common/set'
 import { breakpointFactory } from './utils/breakpointFactory'
 
 export class BreakpointsStore {
-  public buildBreakpointComponents(clientNormalizedBreakpointsConfig: Rmb.Config<string>, options?: Rmb.ParsedOptions) {
+  public buildBreakpointComponents(clientNormalizedBreakpointsConfig: Rmb.Config, options?: Rmb.ParsedOptions) {
     Object.keys(clientNormalizedBreakpointsConfig).forEach(breakpointId => {
       const Breakpoint = breakpointFactory(breakpointId, options)
 

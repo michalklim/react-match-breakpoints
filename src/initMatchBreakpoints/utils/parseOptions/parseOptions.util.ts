@@ -10,7 +10,7 @@ export const parseOptions: ParseOptionsUtil = options => {
           ? {
               rehydrate: true,
               ...options.ssr,
-              config: normalizeBreakpointsConfig(options.ssr.config),
+              config: normalizeBreakpointsConfig<boolean>(options.ssr.config),
             }
           : undefined,
       }
