@@ -1,6 +1,6 @@
 import { set } from '../../../utils/set'
 
-type DenormalizeBreakpointsStateUtil = (state: RmbBreakpointsState) => DenormalizedBreakpointsState<RmbBreakpointsState>
+type DenormalizeBreakpointsStateUtil = (state: Rmb.NormalizedConfig) => Rmb.Breakpoints
 export const denormalizeBreakpointsState: DenormalizeBreakpointsStateUtil = state => {
   return Object.entries(state).reduce((acc, [key, value]) => {
     set(acc, key, value)

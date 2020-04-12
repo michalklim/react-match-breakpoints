@@ -3,8 +3,8 @@ import { breakpointsStoreInstance } from '../BreakpointsStore'
 import { providerFactory } from './utils/providerFactory'
 import { parseOptions } from './utils/parseOptions'
 
-export function initMatchBreakpoints(breakpointsConfig: RmbConfig<string>, options?: RmbOptions) {
-  const clientNormalizedBreakpointsConfig = normalizeBreakpointsConfig<string>(breakpointsConfig)
+export function initMatchBreakpoints(breakpointsConfig: Rmb.Config<string>, options?: Rmb.Options) {
+  const clientNormalizedBreakpointsConfig = normalizeBreakpointsConfig(breakpointsConfig)
   const parsedOptions = parseOptions(options)
 
   breakpointsStoreInstance.buildBreakpointComponents(clientNormalizedBreakpointsConfig, parsedOptions)

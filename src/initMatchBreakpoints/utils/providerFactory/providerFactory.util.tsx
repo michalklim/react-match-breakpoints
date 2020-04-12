@@ -3,8 +3,8 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import { BreakpointsContext, generateInitialState } from '../../../BreakpointsContext'
 
 type ProviderFactory = (
-  clientNormalizedBreakpointsConfig: RmbNormalizedBreakpointsConfig<string>,
-  options?: RmbParsedOptions,
+  clientNormalizedBreakpointsConfig: Rmb.NormalizedConfig<string>,
+  options?: Rmb.ParsedOptions,
 ) => FunctionComponent
 
 export const providerFactory: ProviderFactory = (clientNormalizedBreakpointsConfig, options) => {

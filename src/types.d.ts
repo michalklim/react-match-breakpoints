@@ -1,43 +1,39 @@
-type PlainObject = Record<string | number | symbol, any>
+namespace Rmb {
+  type PlainObject = Record<string | number | symbol, any>
 
-interface RmbBreakpointsState {
-  [key: string]: boolean
-}
+  interface Config<T extends boolean | string = boolean> {
+    [key: string]: T | Config<T>
+  }
 
-interface RmbConfig<T extends boolean | string> {
-  [key: string]: T | BreakpointsConfig
-}
+  type NormalizedConfig<T extends boolean | string = boolean> = Record<string, T>
 
-interface RmbNormalizedBreakpointsConfig<T extends boolean | string> {
-  [key: string]: T
-}
+  interface Options {
+    debug?: boolean
+    ssr?: {
+      isServer: boolean
+      config: Config
+      rehydrate?: boolean
+    }
+  }
 
-interface RmbOptions {
-  debug?: boolean
-  ssr?: {
-    isServer: boolean
-    config: RmbConfig<boolean>
-    rehydrate?: boolean
+  interface ParsedOptions {
+    debug?: boolean
+    ssr?: {
+      isServer: boolean
+      config: NormalizedConfig
+      rehydrate?: boolean
+    }
+  }
+
+  type DeepOverrideValues<T, P, V> = {
+    [K in keyof T]?: T[K] extends P ? DeepOverrideValues<T[K], P, V> : V
+  }
+
+  type Breakpoints<T = Config<string>, P = boolean> = import('utility-types').DeepNonNullable<
+    DeepOverrideValues<T, Config<string>, P>
+  >
+
+  interface InjectedBreakpointsProps<T extends Config<string> = Config<string>> {
+    breakpoints: Breakpoints<T>
   }
 }
-
-interface RmbParsedOptions {
-  debug?: boolean
-  ssr?: {
-    isServer: boolean
-    config: RmbBreakpointsState
-    rehydrate?: boolean
-  }
-}
-//
-// interface InjectedBreakpointsProps<T = RmbBreakpointsState> {
-//   breakpoints: RmbConfig<boolean>
-// }
-//
-// type DeepOverrideValues<T, P, V> = {
-//   [K in keyof T]?: T[K] extends P ? DeepOverrideValues<T[K]> : V
-// }
-//
-// type DenormalizedBreakpointsState<T> = import('utility-types').DeepNonNullable<
-//   DeepOverrideValues<T, MediaQueryDict, boolean>
-//   >
