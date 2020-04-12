@@ -1,4 +1,4 @@
-import { get } from '../../../utils/get'
+import { get } from '../../../common/get'
 
 export const proxifyBreakpointsStore = <T extends object>(obj: T) =>
   new Proxy(obj, {
@@ -8,7 +8,7 @@ export const proxifyBreakpointsStore = <T extends object>(obj: T) =>
 
       if (isMissingComponent) {
         console.warn(
-          `[RMB] You are trying to use component(${String(propKey)}). 
+          `[RMB] You are trying to use component(${String(propKey)}).
           That name doesn't match any breakpoint you have provided.
           Current breakpoints components names are: ${Object.keys(target).join(', ')}`,
         )

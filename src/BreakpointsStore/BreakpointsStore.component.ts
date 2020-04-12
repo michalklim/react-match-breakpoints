@@ -1,4 +1,4 @@
-import { set } from '../utils/set'
+import { set } from '../common/set'
 import { breakpointFactory } from './utils/breakpointFactory'
 
 export class BreakpointsStore {
