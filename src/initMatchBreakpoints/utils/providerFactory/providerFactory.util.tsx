@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 
-import { BreakpointsContext, generateInitialState } from '../../../BreakpointsContext'
+import { BreakpointsContext, generateInitialState } from 'BreakpointsContext'
 
 type ProviderFactory = (
   clientNormalizedBreakpointsConfig: Rmb.NormalizedConfig<string>,
