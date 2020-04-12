@@ -18,7 +18,8 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "react-match-breakpoints": ["src"]
+      "react-match-breakpoints": ["src"],
+      "*": ["./src/*"]
     }
   },
   "include": ["src", "stories"]

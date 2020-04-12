@@ -1,5 +1,6 @@
+import { breakpointsStoreInstance } from 'BreakpointsStore'
+
 import { normalizeBreakpointsConfig } from './utils/normalizeMediaQueryDict'
-import { breakpointsStoreInstance } from '../BreakpointsStore'
 import { providerFactory } from './utils/providerFactory'
 import { parseOptions } from './utils/parseOptions'
 

@@ -1,4 +1,4 @@
-import { isPlainObject } from '../../../common/isPlainObject'
+import { isPlainObject } from 'common/isPlainObject'
 
 export const normalizeBreakpointsConfig = <T extends boolean | string>(
   breakpointsConfig: Rmb.Config<T>,
