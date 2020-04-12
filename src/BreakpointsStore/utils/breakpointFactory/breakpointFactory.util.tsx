@@ -1,7 +1,7 @@
 import React, { Children, cloneElement, Fragment, FunctionComponent, useContext, useEffect, useState } from 'react'
 import { BreakpointsContext } from '../../../BreakpointsContext'
 
-type BreakpointFactoryUtil = (breakpointId: string, options?: RmbParsedOptions) => FunctionComponent
+type BreakpointFactoryUtil = (breakpointId: string, options?: Rmb.ParsedOptions) => FunctionComponent
 
 const PassThrough: FunctionComponent = ({ children }) => <Fragment>{children}</Fragment>
 

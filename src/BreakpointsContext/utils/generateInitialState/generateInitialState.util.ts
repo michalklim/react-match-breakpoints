@@ -1,7 +1,7 @@
 type GenerateInitialStateUtil = (
-  clientNormalizedBreakpointsConfig: RmbNormalizedBreakpointsConfig<string>,
-  options?: RmbParsedOptions,
-) => RmbBreakpointsState
+  clientNormalizedBreakpointsConfig: Rmb.NormalizedConfig<string>,
+  options?: Rmb.ParsedOptions,
+) => Rmb.NormalizedConfig
 
 export const generateInitialState: GenerateInitialStateUtil = (clientNormalizedBreakpointsConfig, options) => {
   if (!!options?.ssr?.config) {

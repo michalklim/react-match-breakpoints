@@ -1,6 +1,6 @@
 import { normalizeBreakpointsConfig } from '../normalizeMediaQueryDict'
 
-type ParseOptionsUtil = (options?: RmbOptions) => RmbParsedOptions | undefined
+type ParseOptionsUtil = (options?: Rmb.Options) => Rmb.ParsedOptions | undefined
 
 export const parseOptions: ParseOptionsUtil = options => {
   return options
@@ -10,7 +10,7 @@ export const parseOptions: ParseOptionsUtil = options => {
           ? {
               rehydrate: true,
               ...options.ssr,
-              config: normalizeBreakpointsConfig<boolean>(options.ssr.config),
+              config: normalizeBreakpointsConfig(options.ssr.config),
             }
           : undefined,
       }
