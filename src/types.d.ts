@@ -8,7 +8,6 @@ namespace Rmb {
   type NormalizedConfig<T extends boolean | string = boolean> = Record<string, T>
 
   interface Options {
-    debug?: boolean
     ssr?: {
       isServer: boolean
       config: ServerConfig
@@ -19,7 +18,6 @@ namespace Rmb {
   type ServerConfig = DeepOverrideValues<Config, Config, boolean>
 
   interface ParsedOptions {
-    debug?: boolean
     ssr?: {
       isServer: boolean
       config: NormalizedConfig
