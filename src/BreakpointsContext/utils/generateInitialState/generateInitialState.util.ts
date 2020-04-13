@@ -9,11 +9,11 @@ export const generateInitialState: GenerateInitialStateUtil = (clientNormalizedB
   }
   const renderedJustOnClient = typeof options?.ssr === 'undefined'
 
-  if (renderedJustOnClient) {
+  if (renderedJustOnClient && typeof window?.matchMedia !== 'undefined') {
     return Object.entries(clientNormalizedBreakpointsConfig).reduce((acc, [key, value]) => {
       return {
         ...acc,
-        [key]: matchMedia(value).matches,
+        [key]: window.matchMedia(value).matches,
       }
     }, {})
   }

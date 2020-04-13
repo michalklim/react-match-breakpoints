@@ -1,8 +1,8 @@
 namespace Rmb {
   type PlainObject = Record<string | number | symbol, any>
 
-  interface Config {
-    [key: string]: string | Config
+  interface Config<T extends string | boolean = string> {
+    [key: string]: T | Config<T>
   }
 
   type NormalizedConfig<T extends boolean | string = boolean> = Record<string, T>
@@ -10,12 +10,10 @@ namespace Rmb {
   interface Options {
     ssr?: {
       isServer: boolean
-      config: ServerConfig
+      config: Config<boolean>
       rehydrate?: boolean
     }
   }
-
-  type ServerConfig = DeepOverrideValues<Config, Config, boolean>
 
   interface ParsedOptions {
     ssr?: {
