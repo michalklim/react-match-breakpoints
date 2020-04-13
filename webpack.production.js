@@ -1,35 +1,23 @@
 const webpack = require('webpack')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const pkg = require('./package.json')
 const webpackMerge = require('webpack-merge')
 const typescriptConfig = require('./webpack.typescript-base')
 
-module.exports = () =>
+module.exports = (env, argv) =>
   webpackMerge(
     {
-      plugins: [new webpack.ProgressPlugin()],
-      mode: 'production',
+      plugins: [new webpack.ProgressPlugin(), new CleanWebpackPlugin()],
+      mode: argv.mode,
       devtool: 'source-maps',
       output: {
         filename: 'index.js',
         libraryTarget: 'umd',
         library: pkg.name,
       },
-      module: {
-        rules: [
-          {
-            enforce: 'pre',
-            test: /\.(ts|tsx)$/,
-            exclude: /node_modules/,
-            loader: 'eslint-loader',
-            options: {
-              emitError: true,
-            },
-          },
-        ],
-      },
       externals: {
         react: 'react',
       },
     },
-    typescriptConfig,
+    typescriptConfig(env, argv),
   )

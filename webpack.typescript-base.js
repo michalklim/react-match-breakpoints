@@ -1,6 +1,7 @@
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
-module.exports = {
+module.exports = (env, argv) => ({
   module: {
     rules: [
       {
@@ -19,4 +20,10 @@ module.exports = {
     plugins: [new TsconfigPathsPlugin()],
     extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'],
   },
-}
+  plugins: [
+    new ForkTsCheckerWebpackPlugin({
+      eslint: true,
+      async: argv.mode !== 'production',
+    }),
+  ],
+})
