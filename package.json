@@ -3,6 +3,7 @@
   "version": "2.0.0-3",
   "description": "Lightweight and easy to use media query library for React 📱💻🖥️",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/michalklim/react-match-breakpoints.git"
