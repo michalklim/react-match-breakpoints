@@ -1,13 +1,18 @@
 import { proxifyBreakpointsStore } from './proxifyBreakpointsStore.util'
 
+let consoleSpy: jest.SpyInstance
+
+beforeEach(() => {
+  consoleSpy = jest.spyOn(global.console, 'warn')
+  consoleSpy.mockImplementation(() => null)
+})
+
 afterEach(() => {
-  jest.clearAllMocks()
+  consoleSpy.mockRestore()
 })
 
 describe('proxifyBreakpointsStore', () => {
   it('warn if trying to access missing property', () => {
-    const spy = jest.spyOn(global.console, 'warn').mockImplementation()
-
     const TEST_OBJ = {
       mobile: true,
     }
@@ -16,12 +21,10 @@ describe('proxifyBreakpointsStore', () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
     const _ = (proxiedObject as any).tablet
 
-    expect(spy).toHaveBeenCalled()
+    expect(consoleSpy).toHaveBeenCalled()
   })
 
   it('just return property value if it exists', () => {
-    const spy = jest.spyOn(global.console, 'warn')
-
     const TEST_OBJ = {
       mobile: true,
     }
@@ -30,7 +33,7 @@ describe('proxifyBreakpointsStore', () => {
 
     const test = proxiedObject.mobile
 
-    expect(spy).not.toHaveBeenCalled()
+    expect(consoleSpy).not.toHaveBeenCalled()
     expect(test).toEqual(true)
   })
 })

@@ -9,13 +9,11 @@ export { BreakpointsContext } from 'BreakpointsContext'
 export { useBreakpoints } from 'useBreakpoints'
 export { withBreakpoints } from 'withBreakpoints'
 
-export interface WithBreakpointsProps<T extends Rmb.Config = Rmb.Config> {
-  breakpoints: Rmb.Breakpoints<T>
-}
+export type InjectedBreakpointsProps<T extends Rmb.Config = Rmb.Config> = Rmb.InjectedBreakpointsProps<T>
 
 export interface TypedBreakpoints<T extends Rmb.Config> {
   default: Rmb.Breakpoints<T, FunctionComponent>
-  initMatchBreakpoints: (mediaQueriesDict: T) => ReturnType<typeof import('initMatchBreakpoints').initMatchBreakpoints>
+  initMatchBreakpoints: (breakpointsConfig: T) => ReturnType<typeof import('initMatchBreakpoints').initMatchBreakpoints>
   BreakpointsContext: typeof import('BreakpointsContext').BreakpointsContext
   useBreakpoints: () => Rmb.Breakpoints<T>
   withBreakpoints: <P extends Rmb.InjectedBreakpointsProps<T>>(

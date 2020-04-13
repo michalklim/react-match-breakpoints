@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react'
 import * as RMB from 'react-match-breakpoints'
+import { InjectedBreakpointsProps } from 'react-match-breakpoints'
 
 export default {
   title: 'Examples',
@@ -15,7 +16,7 @@ const breakpointsConfig = {
 
 const { initMatchBreakpoints, withBreakpoints } = (RMB as unknown) as RMB.TypedBreakpoints<typeof breakpointsConfig>
 
-const StoryContent: FunctionComponent<RMB.WithBreakpointsProps<typeof breakpointsConfig>> = ({ breakpoints }) => {
+const StoryContent: FunctionComponent<InjectedBreakpointsProps<typeof breakpointsConfig>> = ({ breakpoints }) => {
   console.log(breakpoints)
   return <div>test</div>
 }

@@ -23,6 +23,9 @@ module.exports = (env, argv) => ({
   plugins: [
     new ForkTsCheckerWebpackPlugin({
       eslint: true,
+      eslintOptions: {
+        emitError: argv.mode === 'production',
+      },
       async: argv.mode !== 'production',
     }),
   ],

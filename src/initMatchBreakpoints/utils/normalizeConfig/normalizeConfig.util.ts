@@ -1,7 +1,7 @@
 import { isPlainObject } from 'common/isPlainObject'
 
-export const normalizeBreakpointsConfig = <T extends boolean | string>(
-  breakpointsConfig: Rmb.Config | Rmb.ServerConfig,
+export const normalizeConfig = <T extends string | boolean>(
+  breakpointsConfig: Rmb.Config<T>,
 ): Rmb.NormalizedConfig<T> => {
   const normalizeRecursively = (
     breakpointsConfigPart: typeof breakpointsConfig | object,
