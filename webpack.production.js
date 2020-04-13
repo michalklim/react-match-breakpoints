@@ -13,6 +13,7 @@ module.exports = (env, argv) =>
       output: {
         filename: 'index.js',
         libraryTarget: 'umd',
+        globalObject: 'this',
         library: pkg.name,
       },
       externals: {
