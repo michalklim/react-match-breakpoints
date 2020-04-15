@@ -32,8 +32,7 @@
     "release": "np",
     "build-storybook": "build-storybook -s public",
     "deploy-storybook": "storybook-to-ghpages --out=storybook-static",
-    "prepublishOnly": "npm run build",
-    "postpublish": "npm run build-storybook && npm run deploy-storybook"
+    "prepublishOnly": "npm run build"
   },
   "author": "Michal Klim <michal.wklim@gmail.com>",
   "license": "MIT",
