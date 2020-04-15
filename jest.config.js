@@ -8,6 +8,8 @@ const baseConfig = {
     '^withBreakpoints[/](.*)': '<rootDir>/src/withBreakpoints/$1',
   },
   coveragePathIgnorePatterns: ['<rootDir>/src/index.ts', '<rootDir>/src/utils/index.ts'],
+  collectCoverageFrom: ['src/**/*.{ts,tsx}'],
+  coverageDirectory: 'coverage',
 }
 
 module.exports = {
