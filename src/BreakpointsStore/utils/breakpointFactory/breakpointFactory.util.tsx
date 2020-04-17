@@ -1,5 +1,6 @@
 import React, { Children, cloneElement, Fragment, FunctionComponent, useContext, useEffect, useState } from 'react'
 import { BreakpointsContext } from 'BreakpointsContext/index'
+import { isFunction } from 'common/isFunction'
 
 type BreakpointFactoryUtil = (breakpointId: string, options?: Rmb.ParsedOptions) => FunctionComponent
 
@@ -16,6 +17,10 @@ export const breakpointFactory: BreakpointFactoryUtil = (breakpointId, options) 
         setKeyState('guessed-wrong')
       }
     }, [breakpointState])
+
+    if (isFunction(children)) {
+      return children(breakpointState)
+    }
 
     return (
       <PassThrough key={keyState}>
