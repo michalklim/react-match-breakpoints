@@ -1,3 +1,3 @@
 export function isFunction(val: unknown): val is Function {
-  return typeof val === 'function'
+  return val && {}.toString.call(val) === '[object Function]'
 }
