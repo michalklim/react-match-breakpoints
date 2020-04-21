@@ -8,6 +8,7 @@ namespace Rmb {
   type NormalizedConfig<T extends boolean | string = boolean> = Record<string, T>
 
   interface Options {
+    breakpointCSSClass?: boolean
     ssr?: {
       isServer: boolean
       config: Config<boolean>
@@ -16,6 +17,7 @@ namespace Rmb {
   }
 
   interface ParsedOptions {
+    breakpointCSSClass?: boolean
     ssr?: {
       isServer: boolean
       config: NormalizedConfig
