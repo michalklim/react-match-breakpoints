@@ -1,0 +1,219 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks'
+
+<Meta title="API" />
+
+## initMatchBreakpoints([Config](https://michalklim.github.io/react-match-breakpoints?path=/docs/api--page#config), [[Options](https://michalklim.github.io/react-match-breakpoints)])
+
+Type: `Function`<br/>
+Returns: `BreakpointsProvider`
+
+
+Prompter function which takes your prompt objects and returns an object with responses.
+
+
+<br/>
+
+
+## Breakpoint
+
+Type: `Component`<br/>
+
+Breakpoint component you can use inside jsx code. Breakpoint resembles [Config](https://michalklim.github.io/react-match-breakpoints?path=/docs/api--page#config) object used
+during initialization
+
+#### Example
+
+```jsx
+import React from 'react'
+import Breakpoint from 'react-match-breakpoints'
+
+// config
+// {
+//   mobile: 'only screen and (max-width: 768px)',
+//   tablet: 'only screen and (min-width: 768px) and (max-width: 1280px)'
+// }
+
+const ResponsiveComponent = () => {
+  return (
+    <Breakpoint.mobile>
+      <span>I will be showed on mobile devices</span>
+    </Breakpoint.mobile>
+
+    <Breakpoint.tablet>
+      <span>I will be showed on tablet devices</span>
+    </Breakpoint.tablet>
+  )
+}
+```
+
+You can also pass a function as a children
+
+```jsx
+import React from 'react'
+import Breakpoint from 'react-match-breakpoints'
+
+const ResponsiveComponent = () => {
+  return (
+    <Breakpoint.mobile>
+      {(match) => {
+        return match
+          ? <span>I will be shown on mobile devices</span>
+          : <span>I will be shown on other devices</span>
+      }}
+
+    </Breakpoint.mobile>
+  )
+}
+```
+
+if [Options.breakpointCSSClass](https://michalklim.github.io/react-match-breakpoints?path=/docs/api--page#optionsbreakpointcssclass) is set to `true` all children that are valid dom elements will have additional
+css class added to them. Those css class will be `rmb-[breakpointId]` where `breakpointId` resembles `Breakpoint` path
+
+```jsx
+import React from 'react'
+import Breakpoint from 'react-match-breakpoints'
+
+// config
+// {
+//   mobile: {
+//     big: 'only screen and (max-width: 768px)'
+//   },
+// }
+
+const ResponsiveComponent = () => {
+  return (
+    <Breakpoint.mobile.big>
+      <span>I will be showed on mobile devices</span>
+    </Breakpoint.mobile.big>
+  }
+
+// will be rendered into DOM as
+// <span class="rmb-mobile.big">I will be showed on mobile devices</span>
+```
+
+
+<br/>
+
+
+## useBreakpoints()
+
+  Type: `Function`<br/>
+  Returns: `Breakpoints`
+
+
+<br/>
+
+
+## withBreakpoints(Component)
+
+  Type: `Function`<br/>
+  Returns: `Enhanced Component`
+
+
+<br />
+
+## Config
+
+Config could be any flat or nested object with media query string as end values
+
+```
+{
+   [key: string]: String | Config
+}
+```
+
+#### Example
+
+```javascript
+{
+  mobile: 'only screen and (max-width: 768px)',
+  desktop: {
+    small: 'only screen and (max-width: 1366px)',
+    big: 'only screen and (max-width: 1920px)',
+  }
+}
+```
+
+<br />
+
+## Options
+
+Options object passed to [initMatchBreakpoints](https://michalklim.github.io/react-match-breakpoints?path=/docs/api--page#initmatchbreakpointsconfig-options) during initialization
+
+```
+{
+  breakpointCSSClass: boolean
+  ssr: Object
+}
+```
+
+### Options.breakpointCSSClass
+
+TODO
+
+### Options.ssr
+
+SSR configuration object. Please see SSR page for more
+
+```
+{
+  isServer: boolean
+  config: ServerConfig
+  rehydrate: boolean
+}
+```
+
+<br />
+
+## ServerConfig
+
+Configuration needed for initial render that happens on server. Has to correspond with [Config](https://michalklim.github.io/react-match-breakpoints?path=/docs/api--page#config) object passed during initialization
+
+```
+{
+  [key: string]: boolean | ServerConfig
+}
+```
+
+#### Example
+
+```javascript
+const config = {
+  mobile: 'only screen and (max-width: 768px)',
+  desktop: {
+    small: 'only screen and (max-width: 1366px)',
+    big: 'only screen and (max-width: 1920px)',
+  }
+}
+
+
+const serverConfig = {
+  mobile: true,
+  desktop: {
+    small: false,
+    big: false,
+  }
+}
+```
+
+<br />
+
+## Breakpoints
+
+Boolean object that resembles [Config](). Values are dynamic based on active breakpoint
+
+```
+[key: string]: boolean | Breakpoints
+```
+
+#### Example
+
+```javascript
+const config {
+  mobile:  'only screen and (max-width: 768px)',
+  tablet: 'only screen and (max-width: 1024px)'
+}
+
+// Breakpoints on mobile devices => { mobile: true, tablet: false }
+
+```

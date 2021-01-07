@@ -1,15 +1,17 @@
-<div align="center">
+<Meta title="Quick Start" />
+
+<div style={{textAlign: 'center'}}>
   <a href="https://michalklim.github.io/react-match-breakpoints">
     <img alt="react-match-breakpoints" src="https://raw.githubusercontent.com/michalklim/react-match-breakpoints/master/rmb-social-logo.jpg" height="200px" />
   </a>
-  
+
   <br />
-  
+
   <h1>React Match Breakpoints</h1>
-   <strong>Lightweight, performant and easy to use media query React library 📱💻🖥️</strong>
-  
+   <strong>Lightweight, performant and easy to use media query React library 📱 💻 🖥️ </strong>
+
    <sub>Define your whatever media query configuration once and use it across project either as components or simply as an object.</sub>
-  
+
 <br/>
 
 [![npm](https://badgen.net/npm/v/react-match-breakpoints)](https://www.npmjs.com/package/react-match-breakpoints)
@@ -55,18 +57,12 @@ $ yarn add react-match-breakpoints
 
 <br />
 
-## Docs
-
-Please head to [https://michalklim.github.io/react-match-breakpoints/](https://michalklim.github.io/react-match-breakpoints/) for full documentation and interactive examples
-
-<br />
- 
 ## Basic usage
 
 First, you have to initialize RMB by calling [initMatchBreakpoints](https://michalklim.github.io/react-match-breakpoints/?path=/docs/api--page#initmatchbreakpoints) method and wrap your application with returned Provider
 and you are ready to go:
 
-> :warning::warning: notice that [initMatchBreakpoints](https://michalklim.github.io/react-match-breakpoints/?path=/docs/api--page#initmatchbreakpoints) is called before actaul app starts to render. This is intentional and required way of setting up RMB
+> notice that [initMatchBreakpoints](https://michalklim.github.io/react-match-breakpoints/?path=/docs/api--page#initmatchbreakpoints) is called before actaul app starts to render. This is intentional and required way of setting up RMB
 
 ```jsx
 import React from 'react'
@@ -93,6 +89,7 @@ Using `Breakpoint` component
 ```jsx
 import React from 'react'
 import Breakpoint from 'react-match-breakpoints'
+import App from './App'
 
 const ResponsiveComponent = () => {
   return (
@@ -112,6 +109,7 @@ Using `useBreakpoints` hook
 ```jsx
 import React from 'react'
 import { useBreakpoints } from 'react-match-breakpoints'
+import App from './App'
 
 const ResponsiveComponent = () => {
   const breakpoints = useBreakpoints()
@@ -127,6 +125,7 @@ Using `withBreakpoints` HOC
 ```jsx
 import React from 'react'
 import { withBreakpoints } from 'react-match-breakpoints'
+import App from './App'
 
 const ResponsiveComponent = props => {
   const text = props.breakpoints.mobile ? 'I will be shown on mobile devices' : 'I will be shown on other devices'
@@ -137,16 +136,3 @@ const ResponsiveComponent = props => {
 export default withBreakpoints(ResponsiveComponent)
 ```
 
-<br />
-
-## Support
-
-RMB is supported basically by every browser that implements the full ES5 spec. It might be a good idea to include [matchMedia polyfill](https://github.com/paulirish/matchMedia.js/) for some older browsers.
-
-> :warning::warning: On browsers that don't support [Proxy](https://developer.mozilla.org/pl/docs/Web/JavaScript/Referencje/Obiekty/Proxy) you won't see warnings if you try to access Breakpoints components that are not defined
-
-<br />
-
-## License
-
-[MIT](https://github.com/michalklim/react-match-breakpoints/blob/master/LICENSE), Copyright © 2018-present Michal Klim
