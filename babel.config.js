@@ -1,22 +1,23 @@
 module.exports = {
-  presets: [
-    [
-      '@babel/preset-env',
-      {
-        targets: {
-          browsers: ['last 2 versions'],
-          node: 'current',
-        },
-        modules: false,
-      },
-    ],
-    '@babel/preset-react',
-    '@babel/preset-typescript',
-  ],
-  plugins: ['@babel/proposal-class-properties', '@babel/proposal-object-rest-spread'],
+  presets: ['@babel/preset-react', '@babel/preset-typescript'],
   env: {
     test: {
-      plugins: ['@babel/plugin-transform-modules-commonjs'],
+      presets: [
+        [
+          '@babel/preset-env',
+          {
+            targets: {
+              browsers: ['last 2 versions', 'not dead', '>0.25%'],
+              node: 'current',
+            },
+          },
+        ],
+      ],
+      plugins: [
+        '@babel/proposal-class-properties',
+        '@babel/proposal-object-rest-spread',
+        '@babel/plugin-transform-modules-commonjs',
+      ],
     },
   },
 }

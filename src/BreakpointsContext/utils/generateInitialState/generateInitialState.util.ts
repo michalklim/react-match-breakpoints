@@ -1,7 +1,9 @@
+import { NormalizedConfig, ParsedOptions } from '../../../types'
+
 type GenerateInitialStateUtil = (
-  clientNormalizedBreakpointsConfig: Rmb.NormalizedConfig<string>,
-  options?: Rmb.ParsedOptions,
-) => Rmb.NormalizedConfig
+  clientNormalizedBreakpointsConfig: NormalizedConfig<string>,
+  options?: ParsedOptions,
+) => NormalizedConfig
 
 export const generateInitialState: GenerateInitialStateUtil = (clientNormalizedBreakpointsConfig, options) => {
   if (!!options?.ssr?.config) {

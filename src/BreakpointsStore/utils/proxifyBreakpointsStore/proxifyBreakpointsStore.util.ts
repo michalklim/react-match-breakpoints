@@ -1,4 +1,4 @@
-import { get } from 'common/get'
+import { get } from '../../../common/get'
 
 export const proxifyBreakpointsStore = <T extends object>(obj: T) =>
   new Proxy(obj, {

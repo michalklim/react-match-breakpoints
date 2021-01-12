@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react'
 import * as RMB from '../dist'
+import { InjectedBreakpointsProps } from '../dist'
 
 export default {
   title: 'Examples',
@@ -13,24 +14,23 @@ const breakpointsConfig = {
   },
 }
 
-const { initMatchBreakpoints, useBreakpoints } = (RMB as unknown) as RMB.TypedBreakpoints<typeof breakpointsConfig>
+const { initMatchBreakpoints, withBreakpoints } = (RMB as unknown) as RMB.TypedBreakpoints<typeof breakpointsConfig>
 
-const StoryContent: FunctionComponent = () => {
-  const breakpoints = useBreakpoints()
+const StoryContent: FunctionComponent<InjectedBreakpointsProps<typeof breakpointsConfig>> = ({ breakpoints }) => {
   console.log(breakpoints)
   return <div>test</div>
 }
 
-export const UseBreakpoints = (): ReactNode => {
+export const WithBreakpoints = (): ReactNode => {
   const BreakpointsProvider = initMatchBreakpoints(breakpointsConfig)
-
+  const EnhancedStoryContent = withBreakpoints(StoryContent)
   return (
     <BreakpointsProvider>
-      <StoryContent />
+      <EnhancedStoryContent />
     </BreakpointsProvider>
   )
 }
 
-UseBreakpoints.story = {
-  name: 'useBreakpoints',
+WithBreakpoints.story = {
+  name: 'withBreakpoints',
 }

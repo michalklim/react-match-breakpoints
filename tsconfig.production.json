@@ -5,6 +5,5 @@
     "declarationDir": "./dist",
     "noEmit": false,
     "emitDeclarationOnly": true
-  },
-  "include": ["src/index.ts", "src/types.d.ts"]
+  }
 }

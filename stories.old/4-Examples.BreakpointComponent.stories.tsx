@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { Breakpoint, initMatchBreakpoints } from '../dist'
+import * as RMB from '../dist'
 
 export default {
   title: 'Examples',
@@ -14,9 +14,12 @@ const breakpointsConfig = {
   },
 }
 
+const { Breakpoint, initMatchBreakpoints } = (RMB as unknown) as RMB.TypedBreakpoints<typeof breakpointsConfig>
+
 export const BreakpointComponent = (): ReactNode => {
   const BreakpointsProvider = initMatchBreakpoints(breakpointsConfig)
 
+  console.log(Breakpoint, 'tesy')
   return (
     <BreakpointsProvider>
       <Breakpoint.mobile>

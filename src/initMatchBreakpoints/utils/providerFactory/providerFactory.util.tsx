@@ -1,17 +1,18 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 
-import { BreakpointsContext, generateInitialState } from 'BreakpointsContext/index'
+import { BreakpointsContext, generateInitialState } from '../../../BreakpointsContext'
+import { NormalizedConfig, ParsedOptions } from '../../../types'
 
 type ProviderFactory = (
-  clientNormalizedBreakpointsConfig: Rmb.NormalizedConfig<string>,
-  options?: Rmb.ParsedOptions,
+  clientNormalizedBreakpointsConfig: NormalizedConfig<string>,
+  options?: ParsedOptions,
 ) => FunctionComponent
 
 export const providerFactory: ProviderFactory = (clientNormalizedBreakpointsConfig, options) => {
   const initialState = generateInitialState(clientNormalizedBreakpointsConfig, options)
 
   const Provider: FunctionComponent = ({ children }) => {
-    const [state, setState] = useState(initialState)
+    const [state, setState] = useState<NormalizedConfig>(initialState)
 
     useEffect(() => {
       Object.entries(clientNormalizedBreakpointsConfig).forEach(([key, value]) => {

@@ -15,12 +15,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
-    "baseUrl": ".",
-    "paths": {
-      "react-match-breakpoints": ["src"],
-      "*": ["./src/*"]
-    }
+    "jsx": "react"
   },
-  "include": ["src", "stories"]
+  "include": ["src/**/*"]
 }

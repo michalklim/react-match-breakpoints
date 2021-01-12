@@ -1,13 +1,12 @@
-import { isPlainObject } from 'common/isPlainObject'
+import { isPlainObject } from '../../../common/isPlainObject'
+import { Config, NormalizedConfig } from '../../../types'
 
-export const normalizeConfig = <T extends string | boolean>(
-  breakpointsConfig: Rmb.Config<T>,
-): Rmb.NormalizedConfig<T> => {
+export const normalizeConfig = <T extends string | boolean>(breakpointsConfig: Config<T>): NormalizedConfig<T> => {
   const normalizeRecursively = (
     breakpointsConfigPart: typeof breakpointsConfig | object,
     parentKeys: string[] = [],
-  ): Rmb.NormalizedConfig<T> => {
-    return Object.entries(breakpointsConfigPart).reduce<Rmb.NormalizedConfig<T>>((acc, [key, value]) => {
+  ): NormalizedConfig<T> => {
+    return Object.entries(breakpointsConfigPart).reduce<NormalizedConfig<T>>((acc, [key, value]) => {
       if (isPlainObject(value)) {
         return {
           ...acc,

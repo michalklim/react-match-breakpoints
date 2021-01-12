@@ -1,6 +1,7 @@
+import { PlainObject } from '../../types'
 import { isPlainObject } from '../isPlainObject'
 
-export const set = (obj: Rmb.PlainObject, path: string | string[], value: unknown): Rmb.PlainObject => {
+export const set = (obj: PlainObject, path: string | string[], value: unknown): PlainObject => {
   if (Object(obj) !== obj) {
     return obj
   }

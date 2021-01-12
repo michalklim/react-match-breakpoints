@@ -1,7 +1,8 @@
 import React, { Fragment, FunctionComponent, ReactNode, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { BreakpointsContext } from 'BreakpointsContext/index'
-import { isFunction } from 'common/isFunction'
-import { parseChildren } from 'BreakpointsStore/utils/parseChildren'
+import { BreakpointsContext } from '../../../BreakpointsContext/index'
+import { isFunction } from '../../../common/isFunction'
+import { parseChildren } from '../../../BreakpointsStore/utils/parseChildren'
+import { ParsedOptions } from '../../../types'
 
 type FaCC = (match: boolean) => ReactNode
 
@@ -9,7 +10,7 @@ interface BreakpointProps {
   children: FaCC | ReactNode
 }
 
-type BreakpointFactoryUtil = (breakpointId: string, options?: Rmb.ParsedOptions) => FunctionComponent<BreakpointProps>
+type BreakpointFactoryUtil = (breakpointId: string, options?: ParsedOptions) => FunctionComponent<BreakpointProps>
 
 const PassThrough: FunctionComponent = ({ children }) => <Fragment>{children}</Fragment>
 

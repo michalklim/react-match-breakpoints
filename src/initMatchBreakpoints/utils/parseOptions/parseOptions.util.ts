@@ -1,6 +1,7 @@
+import { Options, ParsedOptions } from '../../../types'
 import { normalizeConfig } from '../normalizeConfig'
 
-type ParseOptionsUtil = (options?: Rmb.Options) => Rmb.ParsedOptions | undefined
+type ParseOptionsUtil = (options?: Options) => ParsedOptions | undefined
 
 export const parseOptions: ParseOptionsUtil = options => {
   return options
