@@ -1,7 +1,7 @@
-import { NormalizedConfig, ParsedOptions } from '../../../types'
+import { NormalizedConfig, ParsedOptions } from '../../../'
 
 type GenerateInitialStateUtil = (
-  clientNormalizedBreakpointsConfig: NormalizedConfig<string>,
+  clientNormalizedBreakpointsConfig: NormalizedConfig,
   options?: ParsedOptions,
 ) => NormalizedConfig
 
@@ -15,7 +15,7 @@ export const generateInitialState: GenerateInitialStateUtil = (clientNormalizedB
     return Object.entries(clientNormalizedBreakpointsConfig).reduce((acc, [key, value]) => {
       return {
         ...acc,
-        [key]: window.matchMedia(value).matches,
+        [key]: window.matchMedia(value as string).matches,
       }
     }, {})
   }

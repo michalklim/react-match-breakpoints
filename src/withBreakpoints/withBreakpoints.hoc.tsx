@@ -2,7 +2,7 @@ import React, { ComponentType, FunctionComponent, useContext, useMemo } from 're
 import { Subtract } from 'utility-types'
 
 import { BreakpointsContext, denormalizeBreakpointsState } from '../BreakpointsContext'
-import { InjectedBreakpointsProps } from '../types'
+import { InjectedBreakpointsProps } from '../'
 
 export const withBreakpoints = <P extends InjectedBreakpointsProps>(Component: ComponentType<P>) => {
   const EnhancedComponent: FunctionComponent<Subtract<P, InjectedBreakpointsProps>> = props => {

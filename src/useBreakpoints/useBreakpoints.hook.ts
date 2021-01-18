@@ -1,7 +1,7 @@
 import { useContext, useMemo } from 'react'
 
 import { BreakpointsContext, denormalizeBreakpointsState } from '../BreakpointsContext'
-import { NormalizedConfig } from '../types'
+import { NormalizedConfig } from '../'
 
 export const useBreakpoints = () => {
   const state = useContext<NormalizedConfig>(BreakpointsContext)

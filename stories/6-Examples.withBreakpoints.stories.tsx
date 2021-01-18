@@ -1,11 +1,12 @@
 import React, { FunctionComponent, ReactNode } from 'react'
-import * as RMB from '../dist'
+import { InjectedBreakpointsProps, initBreakpoints, withBreakpoints } from '../dist'
 
 export default {
   title: 'Examples',
 }
 
 const breakpointsConfig = {
+  mobile: 'screen and (min-width: 340px)',
   tablet: 'screen and (min-width: 768px)',
   desktop: {
     small: 'screen and (min-width: 1024px)',
@@ -13,15 +14,19 @@ const breakpointsConfig = {
   },
 }
 
-const { initMatchBreakpoints, withBreakpoints } = (RMB as unknown) as RMB.TypedBreakpoints<typeof breakpointsConfig>
+type BreakpointsConfig = typeof breakpointsConfig
 
-const StoryContent: FunctionComponent<RMB.InjectedBreakpointsProps<typeof breakpointsConfig>> = ({ breakpoints }) => {
+declare module '../dist' {
+  interface Config extends BreakpointsConfig {} // eslint-disable-line @typescript-eslint/no-empty-interface
+}
+
+const StoryContent: FunctionComponent<InjectedBreakpointsProps> = ({ breakpoints }) => {
   console.log(breakpoints)
   return <div>test</div>
 }
 
 export const WithBreakpoints = (): ReactNode => {
-  const BreakpointsProvider = initMatchBreakpoints(breakpointsConfig)
+  const BreakpointsProvider = initBreakpoints(breakpointsConfig)
   const EnhancedStoryContent = withBreakpoints(StoryContent)
   return (
     <BreakpointsProvider>

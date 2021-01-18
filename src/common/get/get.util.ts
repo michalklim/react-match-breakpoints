@@ -1,4 +1,4 @@
-import { PlainObject } from '../../types'
+import { PlainObject } from '../../'
 
 const SEPARATOR = '.'
 

@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 
 import { BreakpointsContext, generateInitialState } from '../../../BreakpointsContext'
-import { NormalizedConfig, ParsedOptions } from '../../../types'
+import { NormalizedConfig, ParsedOptions } from '../../../'
 
 type ProviderFactory = (
-  clientNormalizedBreakpointsConfig: NormalizedConfig<string>,
+  clientNormalizedBreakpointsConfig: NormalizedConfig,
   options?: ParsedOptions,
 ) => FunctionComponent
 
@@ -16,7 +16,7 @@ export const providerFactory: ProviderFactory = (clientNormalizedBreakpointsConf
 
     useEffect(() => {
       Object.entries(clientNormalizedBreakpointsConfig).forEach(([key, value]) => {
-        const matchMediaValue = matchMedia(value)
+        const matchMediaValue = matchMedia(value as string)
 
         if (typeof options?.ssr !== 'undefined') {
           setState(prevState => ({

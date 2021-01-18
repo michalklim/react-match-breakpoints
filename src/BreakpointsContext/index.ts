@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { NormalizedConfig } from '../types'
+import { NormalizedConfig } from '../'
 
 export const BreakpointsContext = createContext<NormalizedConfig>({})
 export { generateInitialState } from './utils/generateInitialState'

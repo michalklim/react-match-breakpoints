@@ -1,8 +1,8 @@
 import React, { Fragment, FunctionComponent, ReactNode, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { BreakpointsContext } from '../../../BreakpointsContext/index'
 import { isFunction } from '../../../common/isFunction'
-import { parseChildren } from '../../../BreakpointsStore/utils/parseChildren'
-import { ParsedOptions } from '../../../types'
+import { parseChildren } from '../parseChildren'
+import { ParsedOptions } from '../../../'
 
 type FaCC = (match: boolean) => ReactNode
 

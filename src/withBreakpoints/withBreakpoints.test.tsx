@@ -1,8 +1,8 @@
 import React, { FunctionComponent, ReactNode, Fragment } from 'react'
 import { render } from '@testing-library/react'
-import { initMatchBreakpoints } from '../initMatchBreakpoints'
+import { initBreakpoints } from '../initBreakpoints'
 import { withBreakpoints } from './withBreakpoints.hoc'
-import { InjectedBreakpointsProps } from '../types'
+import { InjectedBreakpointsProps } from '../'
 
 describe('withBreakpoints', () => {
   it.skip('enhances component with denormalized state', () => {
@@ -14,7 +14,7 @@ describe('withBreakpoints', () => {
       },
     }
 
-    const Provider = initMatchBreakpoints(TEST_OBJ)
+    const Provider = initBreakpoints(TEST_OBJ)
     const wrapper = ({ children }: { children?: ReactNode }) => <Provider>{children}</Provider>
     const Component: FunctionComponent<InjectedBreakpointsProps> = ({ breakpoints }) => {
       return <Fragment>{JSON.stringify(breakpoints)}</Fragment>

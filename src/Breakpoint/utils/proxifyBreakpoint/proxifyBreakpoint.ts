@@ -1,6 +1,7 @@
 import { get } from '../../../common/get'
+import { BreakpointComponent } from '../../../'
 
-export const proxifyBreakpointsStore = <T extends object>(obj: T) =>
+export const proxifyBreakpoint = (obj: BreakpointComponent): BreakpointComponent =>
   new Proxy(obj, {
     get: (target, propKey) => {
       const isMissingComponent =

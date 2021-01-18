@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import { renderHook } from '@testing-library/react-hooks'
-import { initMatchBreakpoints } from '../initMatchBreakpoints'
+import { initBreakpoints } from '../initBreakpoints'
 import { useBreakpoints } from './useBreakpoints.hook'
 
 let windowSpy: jest.SpyInstance
@@ -49,7 +49,7 @@ describe('useBreakpoints', () => {
       },
     }
 
-    const Provider = initMatchBreakpoints(TEST_OBJ)
+    const Provider = initBreakpoints(TEST_OBJ)
     const wrapper = ({ children }: { children?: ReactNode }) => <Provider>{children}</Provider>
     const { result } = renderHook(() => useBreakpoints(), { wrapper })
     expect(result.current).toEqual(EXPECTED_RESULT)

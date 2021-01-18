@@ -34,7 +34,7 @@
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage",
-    "start": "run-p -l dev:start-storybook dev:generate-types build:watch",
+    "start": "rimraf ./dist && run-p -l dev:start-storybook dev:generate-types build:watch",
     "prettier": "prettier",
     "format": "npm run prettier -- --write '{,!(dist|examples)/**/}*.js'",
     "check-types": "tsc",

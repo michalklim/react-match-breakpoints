@@ -1,4 +1,4 @@
-import { Options, ParsedOptions } from '../../../types'
+import { Options, ParsedOptions } from '../../../'
 import { normalizeConfig } from '../normalizeConfig'
 
 type ParseOptionsUtil = (options?: Options) => ParsedOptions | undefined

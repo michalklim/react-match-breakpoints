@@ -1,7 +1,7 @@
 import { set } from '../../../common/set'
-import { Breakpoints, NormalizedConfig } from '../../../types'
+import { OverrideDefaultConfig, NormalizedConfig } from '../../../'
 
-type DenormalizeBreakpointsStateUtil = (state: NormalizedConfig) => Breakpoints
+type DenormalizeBreakpointsStateUtil = (state: NormalizedConfig) => OverrideDefaultConfig<boolean>
 export const denormalizeBreakpointsState: DenormalizeBreakpointsStateUtil = state => {
   return Object.entries(state).reduce((acc, [key, value]) => {
     set(acc, key, value)

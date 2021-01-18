@@ -1,9 +1,5 @@
 import React, { ReactNode } from 'react'
-import { Breakpoint, initMatchBreakpoints } from '../dist'
-
-export default {
-  title: 'Examples',
-}
+import { Breakpoint, initBreakpoints } from '../dist'
 
 const breakpointsConfig = {
   mobile: 'screen and (min-width: 340px)',
@@ -14,8 +10,18 @@ const breakpointsConfig = {
   },
 }
 
+type BreakpointsConfig = typeof breakpointsConfig
+
+declare module '../dist' {
+  interface Config extends BreakpointsConfig {} // eslint-disable-line @typescript-eslint/no-empty-interface
+}
+
+export default {
+  title: 'Examples',
+}
+
 export const BreakpointComponent = (): ReactNode => {
-  const BreakpointsProvider = initMatchBreakpoints(breakpointsConfig)
+  const BreakpointsProvider = initBreakpoints(breakpointsConfig)
 
   return (
     <BreakpointsProvider>

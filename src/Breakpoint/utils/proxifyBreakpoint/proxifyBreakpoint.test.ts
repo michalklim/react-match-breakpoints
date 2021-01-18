@@ -1,4 +1,5 @@
-import { proxifyBreakpointsStore } from './proxifyBreakpointsStore.util'
+import { initBreakpointSymbol } from '../../Breakpoint'
+import { proxifyBreakpoint } from './proxifyBreakpoint'
 
 let consoleSpy: jest.SpyInstance
 
@@ -14,10 +15,11 @@ afterEach(() => {
 describe('proxifyBreakpointsStore', () => {
   it('warn if trying to access missing property', () => {
     const TEST_OBJ = {
-      mobile: true,
+      mobile: () => null,
+      [initBreakpointSymbol]: () => null,
     }
 
-    const proxiedObject = proxifyBreakpointsStore(TEST_OBJ)
+    const proxiedObject = proxifyBreakpoint(TEST_OBJ)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
     const _ = (proxiedObject as any).tablet
 
@@ -26,14 +28,15 @@ describe('proxifyBreakpointsStore', () => {
 
   it('just return property value if it exists', () => {
     const TEST_OBJ = {
-      mobile: true,
+      mobile: () => null,
+      [initBreakpointSymbol]: () => null,
     }
 
-    const proxiedObject = proxifyBreakpointsStore(TEST_OBJ)
+    const proxiedObject = proxifyBreakpoint(TEST_OBJ)
 
     const test = proxiedObject.mobile
 
     expect(consoleSpy).not.toHaveBeenCalled()
-    expect(test).toEqual(true)
+    expect(test).toEqual(TEST_OBJ.mobile)
   })
 })

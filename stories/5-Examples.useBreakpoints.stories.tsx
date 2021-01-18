@@ -1,11 +1,12 @@
 import React, { FunctionComponent, ReactNode } from 'react'
-import * as RMB from '../dist'
+import { useBreakpoints, initBreakpoints } from '../dist'
 
 export default {
   title: 'Examples',
 }
 
 const breakpointsConfig = {
+  mobile: 'screen and (min-width: 340px)',
   tablet: 'screen and (min-width: 768px)',
   desktop: {
     small: 'screen and (min-width: 1024px)',
@@ -13,7 +14,11 @@ const breakpointsConfig = {
   },
 }
 
-const { initMatchBreakpoints, useBreakpoints } = (RMB as unknown) as RMB.TypedBreakpoints<typeof breakpointsConfig>
+type BreakpointsConfig = typeof breakpointsConfig
+
+declare module '../dist' {
+  interface Config extends BreakpointsConfig {} // eslint-disable-line @typescript-eslint/no-empty-interface
+}
 
 const StoryContent: FunctionComponent = () => {
   const breakpoints = useBreakpoints()
@@ -22,7 +27,7 @@ const StoryContent: FunctionComponent = () => {
 }
 
 export const UseBreakpoints = (): ReactNode => {
-  const BreakpointsProvider = initMatchBreakpoints(breakpointsConfig)
+  const BreakpointsProvider = initBreakpoints(breakpointsConfig)
 
   return (
     <BreakpointsProvider>

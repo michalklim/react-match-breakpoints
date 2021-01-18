@@ -1,4 +1,4 @@
-import { PlainObject } from '../../types'
+import { PlainObject } from '../../'
 import { isPlainObject } from '../isPlainObject'
 
 export const set = (obj: PlainObject, path: string | string[], value: unknown): PlainObject => {
