@@ -1,7 +1,17 @@
-import { initBreakpointSymbol } from '../../Breakpoint'
+import { ParsedOptions } from '../../..'
+import { initBreakpointSymbol, proxifySymbol } from '../../Breakpoint'
 import { proxifyBreakpoint } from './proxifyBreakpoint'
 
 let consoleSpy: jest.SpyInstance
+
+const defaultOptions: ParsedOptions = {
+  log: true,
+  breakpointCSSClass: false,
+  ssr: {
+    config: null,
+    rehydrate: false,
+  },
+}
 
 beforeEach(() => {
   consoleSpy = jest.spyOn(global.console, 'warn')
@@ -13,26 +23,31 @@ afterEach(() => {
 })
 
 describe('proxifyBreakpointsStore', () => {
-  it('warn if trying to access missing property', () => {
-    const TEST_OBJ = {
-      mobile: () => null,
-      [initBreakpointSymbol]: () => null,
-    }
+  const TEST_OBJ = {
+    mobile: () => null,
+    [initBreakpointSymbol]: () => null,
+    [proxifySymbol]: () => null,
+  }
 
-    const proxiedObject = proxifyBreakpoint(TEST_OBJ)
+  it('warns if trying to access missing property', () => {
+    const proxiedObject = proxifyBreakpoint(TEST_OBJ, defaultOptions)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
     const _ = (proxiedObject as any).tablet
 
     expect(consoleSpy).toHaveBeenCalled()
   })
 
-  it('just return property value if it exists', () => {
-    const TEST_OBJ = {
-      mobile: () => null,
-      [initBreakpointSymbol]: () => null,
-    }
+  it('warns only if logging is enabled', () => {
+    const proxiedObject = proxifyBreakpoint(TEST_OBJ, { ...defaultOptions, log: false })
 
-    const proxiedObject = proxifyBreakpoint(TEST_OBJ)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+    const _ = (proxiedObject as any).tablet
+
+    expect(consoleSpy).not.toHaveBeenCalled()
+  })
+
+  it('returns property value if it exists', () => {
+    const proxiedObject = proxifyBreakpoint(TEST_OBJ, defaultOptions)
 
     const test = proxiedObject.mobile
 

@@ -20,6 +20,7 @@ describe('generateInitialState', () => {
     }
 
     const OPTIONS = {
+      log: false,
       ssr: {
         rehydrate: true,
         config: {
@@ -54,7 +55,11 @@ describe('generateInitialState', () => {
     }
 
     const OPTIONS = {
-      ssr: undefined,
+      log: false,
+      ssr: {
+        config: null,
+        rehydrate: false,
+      },
     }
 
     const EXPECTED_RESULT = {

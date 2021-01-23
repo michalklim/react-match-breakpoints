@@ -1,18 +1,33 @@
 import { Options, ParsedOptions } from '../../../'
 import { normalizeConfig } from '../normalizeConfig'
 
-type ParseOptionsUtil = (options?: Options) => ParsedOptions | undefined
+type ParseOptionsUtil = (options?: Options) => ParsedOptions
+
+const defaultOptions: ParsedOptions = {
+  breakpointCSSClass: false,
+  log: process.env.NODE_ENV !== 'production',
+  ssr: {
+    rehydrate: true,
+    config: null,
+  },
+}
 
 export const parseOptions: ParseOptionsUtil = options => {
-  return (
-    options && {
-      breakpointCSSClass: false,
-      ...options,
-      ssr: options.ssr && {
-        rehydrate: true,
-        ...options.ssr,
-        config: normalizeConfig(options.ssr.config),
-      },
+  if (options) {
+    const { ssr, ...restOfOptions } = options
+
+    return {
+      ...defaultOptions,
+      ...restOfOptions,
+      ...(ssr && {
+        ssr: {
+          ...defaultOptions.ssr,
+          ...ssr,
+          config: normalizeConfig(ssr.config),
+        },
+      }),
     }
-  )
+  }
+
+  return defaultOptions
 }

@@ -9,7 +9,7 @@ type FaCC = (match: boolean) => ReactNode
 interface BreakpointProps {
   children: FaCC | ReactNode
 }
-type BreakpointFactoryUtil = (breakpointId: string, options?: ParsedOptions) => FunctionComponent<BreakpointProps>
+type BreakpointFactoryUtil = (breakpointId: string, options: ParsedOptions) => FunctionComponent<BreakpointProps>
 
 export const breakpointFactory: BreakpointFactoryUtil = (breakpointId, options) => {
   const Breakpoint: FunctionComponent = ({ children }) => {
@@ -17,7 +17,7 @@ export const breakpointFactory: BreakpointFactoryUtil = (breakpointId, options) 
     const breakpointState = !!state[breakpointId]
 
     const parsedChildren = useMemo<ReactNode>(() => {
-      return options?.breakpointCSSClass ? parseChildren(children, breakpointId) : children
+      return options.breakpointCSSClass ? parseChildren(children, breakpointId) : children
     }, [children])
 
     if (isFunction(children)) {

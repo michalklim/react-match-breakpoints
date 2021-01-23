@@ -1,7 +1,8 @@
 import { FunctionComponent } from 'react'
-import { proxifyBreakpoint, Breakpoint as ImportedBreakpoint, initBreakpointSymbol } from './Breakpoint'
+import { initBreakpointSymbol } from './Breakpoint'
+import { proxifySymbol } from './Breakpoint/Breakpoint'
 
-export const Breakpoint = (Proxy && proxifyBreakpoint(ImportedBreakpoint)) || ImportedBreakpoint
+export { Breakpoint } from './Breakpoint'
 export { initBreakpoints } from './initBreakpoints'
 export { BreakpointsContext } from './BreakpointsContext'
 export { useBreakpoints } from './useBreakpoints'
@@ -17,6 +18,7 @@ export type NormalizedConfig = Record<string, unknown>
 
 export interface Options {
   breakpointCSSClass?: boolean
+  log?: boolean
   ssr?: {
     config: OverrideDefaultConfig<boolean>
     rehydrate?: boolean
@@ -25,14 +27,16 @@ export interface Options {
 
 export interface ParsedOptions {
   breakpointCSSClass?: boolean
-  ssr?: {
-    config: NormalizedConfig
+  log: boolean
+  ssr: {
+    config: NormalizedConfig | null
     rehydrate: boolean
   }
 }
 
 export type BreakpointComponent = OverrideDefaultConfig<FunctionComponent> & {
-  [initBreakpointSymbol]: (normalizedConfig: NormalizedConfig, options?: ParsedOptions) => void
+  [initBreakpointSymbol]: (normalizedConfig: NormalizedConfig, options: ParsedOptions) => void
+  [proxifySymbol]: (options: ParsedOptions) => void
 }
 
 export interface InjectedBreakpointsProps {

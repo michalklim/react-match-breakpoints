@@ -1,8 +1,10 @@
 import { set } from '../common/set'
 import { BreakpointComponent } from '../'
 import { breakpointFactory } from './utils/breakpointFactory'
+import { proxifyBreakpoint } from './utils/proxifyBreakpoint'
 
 export const initBreakpointSymbol = Symbol()
+export const proxifySymbol = Symbol()
 
 export const Breakpoint: BreakpointComponent = {
   [initBreakpointSymbol]: function(normalizedConfig, options) {
@@ -11,5 +13,8 @@ export const Breakpoint: BreakpointComponent = {
 
       set(this, breakpointPath, Breakpoint)
     })
+  },
+  [proxifySymbol]: function(options) {
+    proxifyBreakpoint(this, options)
   },
 }

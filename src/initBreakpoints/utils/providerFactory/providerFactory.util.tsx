@@ -5,7 +5,7 @@ import { NormalizedConfig, ParsedOptions } from '../../../'
 
 type ProviderFactory = (
   clientNormalizedBreakpointsConfig: NormalizedConfig,
-  options?: ParsedOptions,
+  options: ParsedOptions,
 ) => FunctionComponent
 
 export const providerFactory: ProviderFactory = (clientNormalizedBreakpointsConfig, options) => {
@@ -18,7 +18,7 @@ export const providerFactory: ProviderFactory = (clientNormalizedBreakpointsConf
       Object.entries(clientNormalizedBreakpointsConfig).forEach(([key, value]) => {
         const matchMediaValue = matchMedia(value as string)
 
-        if (options?.ssr?.rehydrate) {
+        if (options.ssr.config && options.ssr.rehydrate) {
           setState(prevState => ({
             ...prevState,
             [key]: matchMediaValue.matches,

@@ -8,6 +8,7 @@ describe('generateInitialState', () => {
     }
 
     const OPTIONS = {
+      log: false,
       ssr: {
         rehydrate: true,
         config: {
