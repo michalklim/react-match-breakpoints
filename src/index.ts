@@ -46,9 +46,11 @@ export interface InjectedBreakpointsProps {
 }
 
 export type OverrideDefaultConfig<ValueType> = import('utility-types').DeepNonNullable<
-  DeepOverrideValues<Config, ValueType>
+  DeepOverrideValues<Config, Record<string, any>, ValueType>
 >
 
-type DeepOverrideValues<T, V> = {
-  [K in keyof T]?: T[K] extends T ? DeepOverrideValues<T[K], V> : V
+type DeepOverrideValues<OverrideObject, NestedObject, OvverrideValue> = {
+  [Key in keyof OverrideObject]?: OverrideObject[Key] extends NestedObject
+    ? DeepOverrideValues<OverrideObject[Key], NestedObject, OvverrideValue>
+    : OvverrideValue
 }
