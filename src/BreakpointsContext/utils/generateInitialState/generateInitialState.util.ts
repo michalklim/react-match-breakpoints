@@ -10,7 +10,7 @@ export const generateInitialState: GenerateInitialStateUtil = (clientNormalizedB
     return options.ssr.config
   }
 
-  const renderedJustOnClient = !options.ssr.config && typeof window !== 'undefined'
+  const renderedJustOnClient = !options.ssr.config && !options.isServer
 
   if (renderedJustOnClient) {
     return Object.entries(clientNormalizedBreakpointsConfig).reduce((acc, [key, value]) => {

@@ -8,6 +8,7 @@ describe('breakpointFactory', () => {
   const defaultOptions: ParsedOptions = {
     breakpointCSSClass: false,
     log: false,
+    isServer: false,
     ssr: {
       config: null,
       rehydrate: false,

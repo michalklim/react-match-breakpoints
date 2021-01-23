@@ -6,6 +6,7 @@ type ParseOptionsUtil = (options?: Options) => ParsedOptions
 const defaultOptions: ParsedOptions = {
   breakpointCSSClass: false,
   log: process.env.NODE_ENV !== 'production',
+  isServer: typeof window === 'undefined',
   ssr: {
     rehydrate: true,
     config: null,

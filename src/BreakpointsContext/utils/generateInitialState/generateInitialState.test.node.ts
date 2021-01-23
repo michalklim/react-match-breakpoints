@@ -9,6 +9,8 @@ describe('generateInitialState', () => {
 
     const OPTIONS = {
       log: false,
+      breakpointCSSClass: false,
+      isServer: false,
       ssr: {
         rehydrate: true,
         config: {

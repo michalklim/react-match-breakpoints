@@ -7,6 +7,7 @@ let consoleSpy: jest.SpyInstance
 const defaultOptions: ParsedOptions = {
   log: true,
   breakpointCSSClass: false,
+  isServer: false,
   ssr: {
     config: null,
     rehydrate: false,
