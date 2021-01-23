@@ -18,7 +18,7 @@ export const providerFactory: ProviderFactory = (clientNormalizedBreakpointsConf
       Object.entries(clientNormalizedBreakpointsConfig).forEach(([key, value]) => {
         const matchMediaValue = matchMedia(value as string)
 
-        if (typeof options?.ssr !== 'undefined') {
+        if (options?.ssr?.rehydrate) {
           setState(prevState => ({
             ...prevState,
             [key]: matchMediaValue.matches,

@@ -18,7 +18,6 @@ export type NormalizedConfig = Record<string, unknown>
 export interface Options {
   breakpointCSSClass?: boolean
   ssr?: {
-    isServer: boolean
     config: OverrideDefaultConfig<boolean>
     rehydrate?: boolean
   }
@@ -27,9 +26,8 @@ export interface Options {
 export interface ParsedOptions {
   breakpointCSSClass?: boolean
   ssr?: {
-    isServer: boolean
     config: NormalizedConfig
-    rehydrate?: boolean
+    rehydrate: boolean
   }
 }
 

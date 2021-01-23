@@ -9,7 +9,7 @@ describe('generateInitialState', () => {
 
     const OPTIONS = {
       ssr: {
-        isServer: true,
+        rehydrate: true,
         config: {
           mobile: true,
           ['desktop.small']: false,

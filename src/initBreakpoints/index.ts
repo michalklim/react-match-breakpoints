@@ -8,7 +8,8 @@ export function initBreakpoints(breakpointsConfig: Config, options?: Options) {
   const normalizedConfig = normalizeConfig(breakpointsConfig)
   const parsedOptions = parseOptions(options)
 
+  const Provider = providerFactory(normalizedConfig, parsedOptions)
   Breakpoint[initBreakpointSymbol](normalizedConfig, parsedOptions)
 
-  return providerFactory(normalizedConfig, parsedOptions)
+  return Provider
 }
