@@ -1,10 +1,15 @@
 import { isPlainObject } from '../../../common/isPlainObject'
-import { Config, NormalizedConfig } from '../../../'
+import { AllowedConfigValues, Config, NormalizedConfig } from '../../../'
 
-export const normalizeConfig = (config: Config): NormalizedConfig => {
-  const normalizeRecursively = (breakpointsConfigPart: Config, parentKeys: string[] = []): NormalizedConfig => {
-    return Object.entries(breakpointsConfigPart).reduce<NormalizedConfig>((acc, [key, value]) => {
-      if (isPlainObject<Config>(value)) {
+export const normalizeConfig = <ValueType extends AllowedConfigValues>(
+  config: Config<ValueType>,
+): NormalizedConfig<ValueType> => {
+  const normalizeRecursively = (
+    breakpointsConfigPart: Config<ValueType>,
+    parentKeys: string[] = [],
+  ): NormalizedConfig<ValueType> => {
+    return Object.entries(breakpointsConfigPart).reduce<NormalizedConfig<ValueType>>((acc, [key, value]) => {
+      if (isPlainObject<Config<ValueType>>(value)) {
         return {
           ...acc,
           ...normalizeRecursively(value, [...parentKeys, key]),

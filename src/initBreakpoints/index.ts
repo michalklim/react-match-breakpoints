@@ -5,7 +5,7 @@ import { parseOptions } from './utils/parseOptions'
 import { Config, Options } from '../'
 import { proxifySymbol } from '../Breakpoint/Breakpoint'
 
-export function initBreakpoints(breakpointsConfig: Config, options?: Options) {
+export function initBreakpoints(breakpointsConfig: Config<string>, options?: Options) {
   const normalizedConfig = normalizeConfig(breakpointsConfig)
   const parsedOptions = parseOptions(options)
 

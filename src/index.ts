@@ -8,20 +8,34 @@ export { BreakpointsContext } from './BreakpointsContext'
 export { useBreakpoints } from './useBreakpoints'
 export { withBreakpoints } from './withBreakpoints'
 
-export interface Config {
-  [key: string]: Config | unknown
+interface ConfigStructure {
+  [key: string]: ConfigStructure | string
 }
+
+interface UserConfig {} // eslint-disable-line @typescript-eslint/no-empty-interface
+
+export interface DefaultConfig<ValueType extends AllowedConfigValues> {
+  [key: string]: DefaultConfig<ValueType> | ValueType
+}
+
+export type AllowedConfigValues = string | boolean
+
+export type Config<ValueType extends AllowedConfigValues> = keyof UserConfig extends never
+  ? DefaultConfig<ValueType>
+  : UserConfig extends ConfigStructure
+  ? UserConfig
+  : never
 
 export type PlainObject = Record<string | number | symbol, any>
 
-export type NormalizedConfig = Record<string, unknown>
+export type NormalizedConfig<ValuesType extends AllowedConfigValues> = Record<string, ValuesType>
 
 export interface Options {
   breakpointCSSClass?: boolean
   log?: boolean
   isServer?: boolean
   ssr?: {
-    config: OverrideDefaultConfig<boolean>
+    config: OverrideUserConfig<boolean>
     rehydrate?: boolean
   }
 }
@@ -31,22 +45,22 @@ export interface ParsedOptions {
   log: boolean
   isServer: boolean
   ssr: {
-    config: NormalizedConfig | null
+    config: NormalizedConfig<boolean> | null
     rehydrate: boolean
   }
 }
 
-export type BreakpointComponent = OverrideDefaultConfig<FunctionComponent> & {
-  [initBreakpointSymbol]: (normalizedConfig: NormalizedConfig, options: ParsedOptions) => void
+export type BreakpointComponent = OverrideUserConfig<FunctionComponent> & {
+  [initBreakpointSymbol]: (normalizedConfig: NormalizedConfig<string>, options: ParsedOptions) => void
   [proxifySymbol]: (options: ParsedOptions) => void
 }
 
 export interface InjectedBreakpointsProps {
-  breakpoints: OverrideDefaultConfig<boolean>
+  breakpoints: OverrideUserConfig<boolean>
 }
 
-export type OverrideDefaultConfig<ValueType> = import('utility-types').DeepNonNullable<
-  DeepOverrideValues<Config, Record<string, any>, ValueType>
+export type OverrideUserConfig<ValueType> = import('utility-types').DeepNonNullable<
+  DeepOverrideValues<Config<string>, Record<string, any>, ValueType>
 >
 
 type DeepOverrideValues<OverrideObject, NestedObject, OvverrideValue> = {

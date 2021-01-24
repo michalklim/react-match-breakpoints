@@ -4,7 +4,7 @@ import { BreakpointsContext, generateInitialState } from '../../../BreakpointsCo
 import { NormalizedConfig, ParsedOptions } from '../../../'
 
 type ProviderFactory = (
-  clientNormalizedBreakpointsConfig: NormalizedConfig,
+  clientNormalizedBreakpointsConfig: NormalizedConfig<string>,
   options: ParsedOptions,
 ) => FunctionComponent
 
@@ -12,11 +12,11 @@ export const providerFactory: ProviderFactory = (clientNormalizedBreakpointsConf
   const initialState = generateInitialState(clientNormalizedBreakpointsConfig, options)
 
   const Provider: FunctionComponent = ({ children }) => {
-    const [state, setState] = useState<NormalizedConfig>(initialState)
+    const [state, setState] = useState<NormalizedConfig<boolean>>(initialState)
 
     useEffect(() => {
       Object.entries(clientNormalizedBreakpointsConfig).forEach(([key, value]) => {
-        const matchMediaValue = matchMedia(value as string)
+        const matchMediaValue = matchMedia(value)
 
         if (options.ssr.config && options.ssr.rehydrate) {
           setState(prevState => ({

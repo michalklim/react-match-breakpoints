@@ -1,9 +1,9 @@
 import { NormalizedConfig, ParsedOptions } from '../../../'
 
 type GenerateInitialStateUtil = (
-  clientNormalizedBreakpointsConfig: NormalizedConfig,
+  clientNormalizedBreakpointsConfig: NormalizedConfig<string>,
   options: ParsedOptions,
-) => NormalizedConfig
+) => NormalizedConfig<boolean>
 
 export const generateInitialState: GenerateInitialStateUtil = (clientNormalizedBreakpointsConfig, options) => {
   if (options.ssr.config) {
@@ -16,7 +16,7 @@ export const generateInitialState: GenerateInitialStateUtil = (clientNormalizedB
     return Object.entries(clientNormalizedBreakpointsConfig).reduce((acc, [key, value]) => {
       return {
         ...acc,
-        [key]: window.matchMedia(value as string).matches,
+        [key]: window.matchMedia(value).matches,
       }
     }, {})
   }

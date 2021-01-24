@@ -4,6 +4,6 @@ import { BreakpointsContext, denormalizeBreakpointsState } from '../BreakpointsC
 import { NormalizedConfig } from '../'
 
 export const useBreakpoints = () => {
-  const state = useContext<NormalizedConfig>(BreakpointsContext)
+  const state = useContext<NormalizedConfig<boolean>>(BreakpointsContext)
   return useMemo(() => denormalizeBreakpointsState(state), [state])
 }
