@@ -8,7 +8,7 @@ export { BreakpointsContext } from './BreakpointsContext'
 export { useBreakpoints } from './useBreakpoints'
 export { withBreakpoints } from './withBreakpoints'
 
-interface UserConfig {} // eslint-disable-line @typescript-eslint/no-empty-interface
+export interface UserConfig {} // eslint-disable-line @typescript-eslint/no-empty-interface
 
 export interface ConfigStructure<ValueType extends AllowedConfigValues> {
   [key: string]: ConfigStructure<ValueType> | ValueType
