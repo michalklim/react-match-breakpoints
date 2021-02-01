@@ -8,23 +8,17 @@ export { BreakpointsContext } from './BreakpointsContext'
 export { useBreakpoints } from './useBreakpoints'
 export { withBreakpoints } from './withBreakpoints'
 
-interface ConfigStructure {
-  [key: string]: ConfigStructure | string
-}
-
 interface UserConfig {} // eslint-disable-line @typescript-eslint/no-empty-interface
 
-export interface DefaultConfig<ValueType extends AllowedConfigValues> {
-  [key: string]: DefaultConfig<ValueType> | ValueType
+export interface ConfigStructure<ValueType extends AllowedConfigValues> {
+  [key: string]: ConfigStructure<ValueType> | ValueType
 }
 
 export type AllowedConfigValues = string | boolean
 
 export type Config<ValueType extends AllowedConfigValues> = keyof UserConfig extends never
-  ? DefaultConfig<ValueType>
-  : UserConfig extends ConfigStructure
-  ? UserConfig
-  : never
+  ? ConfigStructure<ValueType>
+  : UserConfig
 
 export type PlainObject = Record<string | number | symbol, any>
 
