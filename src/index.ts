@@ -57,8 +57,8 @@ export type OverrideUserConfig<ValueType> = import('utility-types').DeepNonNulla
   DeepOverrideValues<Config<string>, Record<string, any>, ValueType>
 >
 
-type DeepOverrideValues<OverrideObject, NestedObject, OvverrideValue> = {
+type DeepOverrideValues<OverrideObject, NestedObject, OverrideValue> = {
   [Key in keyof OverrideObject]?: OverrideObject[Key] extends NestedObject
-    ? DeepOverrideValues<OverrideObject[Key], NestedObject, OvverrideValue>
-    : OvverrideValue
+    ? DeepOverrideValues<OverrideObject[Key], NestedObject, OverrideValue>
+    : OverrideValue
 }
