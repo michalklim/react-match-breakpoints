@@ -13,7 +13,7 @@
 <br/>
 
 [![npm](https://badgen.net/npm/v/react-match-breakpoints)](https://www.npmjs.com/package/react-match-breakpoints)
-[![Size](https://badgen.net/bundlephobia/minzip/react-match-breakpoints?color=green)](https://www.npmjs.com/package/react-match-breakpoints)
+[![Size](https://badgen.net/bundlephobia/minzip/react-match-breakpoints@latest?color=green)](https://www.npmjs.com/package/react-match-breakpoints)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 ![RMB PR Checks](https://github.com/michalklim/react-match-breakpoints/workflows/RMB%20PR%20Checks/badge.svg)
 ![CodeFactor](https://www.codefactor.io/repository/github/michalklim/react-match-breakpoints/badge?style=flat-square)
@@ -179,7 +179,7 @@ import config from './breakpoints-config.ts'
 type BreakpointsConfig = typeof config
 
 declare module 'react-match-breakpoints' {
-  export interface UserConfig extends BreakpointsConfig
+  export interface UserConfig extends BreakpointsConfig {}
 }
 ```
 
