@@ -48,7 +48,7 @@ React Match Breakpoints (RMB) goal is to provide a consistent way of handling re
 
 - **Lightweight** - no dependencies and it only weighs around 2kb (minified and gzipped)
 
-- **Mature** - Build using Typescript and tested
+- **Mature** - Built using Typescript and tested
 
 <br />
 
